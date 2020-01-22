@@ -4,3 +4,4 @@ __pycache__
 .vscode
 migrations
 node_modules/
+uploads/
