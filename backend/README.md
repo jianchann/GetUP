@@ -1,4 +1,4 @@
-# SnD Backend
+# GetUP Backend
 
 ## To run
 
@@ -22,6 +22,7 @@ docker exec <container_name> flask db upgrade
 ```
 
 ## Reset databse
+
 ```
 docker exec <container_name> flask resetdb
 ```
