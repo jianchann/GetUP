@@ -12,7 +12,7 @@ of the Philippines, Diliman for the AY 2019-
 Code History:
 01/20/20 - Jian Chan - Create File, Add all imports
 01/22/20 - Jian Chan - Implement and finalize methods for view workout/s and add workout
-01/22/20 - Hans Santos - Implement and finalize methods for delete workout
+01/22/20 - Hans Santos - Implement and finalize method for delete workout
 
 File Creation Date: 01/20/20
 Development Group: GetUP
@@ -75,7 +75,7 @@ export default new Vuex.Store({
     // Workout mutations
     /*
     Method Name: set_workouts
-    Creation Date: ** for future sprint
+    Creation Date: 01/22/20
     Purpose: Set workouts variable in state to new value
     Arguments: state, workouts
     Required: None
@@ -86,7 +86,7 @@ export default new Vuex.Store({
     },
     /*
     Method Name: set_workout
-    Creation Date: ** for future sprint
+    Creation Date: 01/22/20
     Purpose: Set workout variable in state to new value
     Arguments: state, workout
     Required: None
@@ -97,6 +97,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    // Review Actions
     createReview: ({ commit }, payload) => {
       commit("add_review", payload);
     },
@@ -104,6 +105,14 @@ export default new Vuex.Store({
       commit("remove_review", payload);
     },
     // Workout Actions
+    /*
+    Method Name: read_workout
+    Creation Date: 01/22/22
+    Purpose: Read specific workout from backend, and call set_workout mutation
+    Arguments: {state, commit} (from store), workoutId (ID of workout)
+    Required: axios
+    Return Value: None
+    */
     read_workout: async ({ state, commit }, workoutId) => {
       await axios
         .get("/workout/" + workoutId, {
@@ -113,11 +122,27 @@ export default new Vuex.Store({
           commit("set_workout", response.data);
         });
     },
+    /*
+    Method Name: read_workouts
+    Creation Date: 01/22/22
+    Purpose: Read workouts from backend, and call set_workouts mutation
+    Arguments: {commit} (from store)
+    Required: axios
+    Return Value: None
+    */
     read_workouts: ({ commit }) => {
       axios.get("/workout").then(response => {
         commit("set_workouts", response.data);
       });
     },
+    /*
+    Method Name: create_workout
+    Creation Date: 01/22/22
+    Purpose: Submit new workout to backend, and call read_workouts mutation
+    Arguments: {commit, dispatch} (from store), workoutData (data object of new workout)
+    Required: axios
+    Return Value: None
+    */
     create_workout: ({ state, dispatch }, workoutData) => {
       axios
         .post("/workout", workoutData, {
@@ -128,9 +153,17 @@ export default new Vuex.Store({
         })
         .catch(error => {});
     },
-    update_workout: ({ state, commit }, payload) => {
+    /*
+    Method Name: update_workout
+    Creation Date: ** for future sprint
+    Purpose: Submit updated workout data to backend, and call set_workout mutation
+    Arguments: {state, commit} (from store), workoutData (data object of updated workout)
+    Required: axios
+    Return Value: None
+    */
+    update_workout: ({ state, commit }, workoutData) => {
       axios
-        .put("/workout/" + payload.id, payload.data, {
+        .put("/workout/" + workoutData.id, workoutData.data, {
           headers: { "X-Access-Token": state.token }
         })
         .then(response => {
@@ -138,9 +171,17 @@ export default new Vuex.Store({
         })
         .catch(error => {});
     },
-    delete_workout: ({ state }, id) => {
+    /*
+    Method Name: delete_workout
+    Creation Date: 01/22/22
+    Purpose: Submit ID of workout to be deleted to the backend then route page to home page
+    Arguments: {state} (from store), workoutId (ID of workout)
+    Required: axios
+    Return Value: None
+    */
+    delete_workout: ({ state }, workoutId) => {
       axios
-        .delete("/workout/" + id, {
+        .delete("/workout/" + workoutId, {
           headers: { "X-Access-Token": state.token }
         })
         .then(response => {
@@ -148,10 +189,16 @@ export default new Vuex.Store({
         })
         .catch(error => {});
     },
-    //
-    // User Functions
-    //
-    register_user: ({ commit, dispatch }, userData) => {
+    // Auth Actions
+    /*
+    Method Name: register_user
+    Creation Date: ** for future sprint
+    Purpose: Submit user data to the backend then call set_token and set_firstName mutations
+    Arguments: {commit} (from store), userData (data object of new user)
+    Required: axios
+    Return Value: None
+    */
+    register_user: ({ commit }, userData) => {
       axios
         .post("/user/register", userData)
         .then(response => {
@@ -162,6 +209,14 @@ export default new Vuex.Store({
         })
         .catch(error => {});
     },
+    /*
+    Method Name: login_user
+    Creation Date: ** for future sprint
+    Purpose: Submit user credentials to the backend and if login succeeds, then call set_token and set_firstName mutations
+    Arguments: {commit} (from store), userData (data object of user credentials)
+    Required: axios
+    Return Value: None
+    */
     login_user: ({ commit }, userData) => {
       axios
         .post("/user/login", userData)
@@ -173,9 +228,14 @@ export default new Vuex.Store({
         })
         .catch(error => {});
     },
-    update_admin: ({ commit }, admin) => {
-      commit("set_admin", admin);
-    },
+    /*
+    Method Name: logout_user
+    Creation Date: ** for future sprint
+    Purpose: Log user out by removing JWT and call set_token, set_firstName, and set_admin mutations
+    Arguments: {commit} (from store)
+    Required: axios
+    Return Value: None
+    */
     logout_user: ({ commit }) => {
       localStorage.removeItem("token");
       localStorage.removeItem("firstName");
