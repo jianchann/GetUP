@@ -1,7 +1,6 @@
 <template>
   <div class="home">
-    <!-- hero -->
-    <HomeHero></HomeHero>
+    <Header />
 
     <div v-if="loggedIn">
       <div class="mt-5 ml-3 mr-3">
@@ -234,15 +233,35 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import HomeHero from "@/pages/Home/Components/HomeHero.vue";
+/*
+Author: Jian Chan, Gab Datiles, Hans Santos
+
+This is a course requirement for CS 192
+Software Engineering II under the
+supervision of Asst. Prof. Ma. Rowena C.
+Solamo of the Department of Computer
+Science, College of Engineering, University
+of the Philippines, Diliman for the AY 2019-
+2020.
+
+Code History:
+01/20/20 - Jian Chan - Create File, Add all imports, Fix layout of home page
+01/22/20 - Jian Chan - Implement and finalize methods for view workouts, add workout, and HTML display
+01/22/20 - Gab Datiles - Implement only add workout available if no workout exists
+
+File Creation Date: 01/20/20
+Development Group: GetUP
+Client Group: UP Diliman Students
+Purpose: Home page for all workouts
+*/
+import Header from "@/pages/Home/Components/Header.vue";
 import Card from "@/global/Card.vue";
 import Auth from "@/pages/Home/Components/Auth.vue";
 import { mapState } from "vuex";
 
 export default {
   name: "home",
-  components: { HomeHero, Card, Auth },
+  components: { Header, Card, Auth },
   data() {
     return {
       workoutTitle: null,
@@ -268,12 +287,36 @@ export default {
     };
   },
   methods: {
+    /*
+    Method Name: gotoPage
+    Creation Date: 01/20/20
+    Purpose: Route url to specific page
+    Arguments: Path of page, ID for specific page
+    Required: None
+    Return Value: None
+    */
     gotoPage(path, id) {
       this.$router.push("/" + path + "/" + id);
     },
+    /*
+    Method Name: openModal
+    Creation Date: 01/21/20
+    Purpose: Open modal for adding workout
+    Arguments: None
+    Required: None
+    Return Value: None
+    */
     openModal() {
       this.$refs.addWorkout.show();
     },
+    /*
+    Method Name: addWorkout
+    Creation Date: 01/21/20
+    Purpose: Validate workout data then call method from store with data
+    Arguments: Workout data (implicit)
+    Required: Vuex store file (implicit by calling this.$store...)
+    Return Value: None
+    */
     addWorkout() {
       this.$validator.validateAll().then(result => {
         if (result) {
@@ -293,38 +336,20 @@ export default {
         } else {
         }
       });
-    },
-    addWorkoutSuggestion() {
-      this.$validator.validateAll().then(result => {
-        if (result) {
-          var lastId = this.workouts[this.workouts.length - 1].id;
-          var workout = {
-            id: lastId + 1,
-            title: this.workoutTitle,
-            location: this.workoutLocation,
-            duration: this.workoutDuration,
-            times: this.workoutTimes,
-            materials: this.workoutMaterials,
-            image: "workout2.jpg",
-            reviews: [],
-            approved: false
-          };
-          this.$store.dispatch("create", workout);
-          this.workoutTitle = null;
-          this.workoutLocation = null;
-          this.workoutTimes = null;
-          this.workoutMaterials = null;
-          this.workoutDuration = null;
-          this.$refs.addWorkout.hide();
-        } else {
-        }
-      });
     }
   },
   computed: {
     ...mapState(["workouts", "loggedIn"])
   },
   watch: {
+    /*
+    Method Name: loggedIn
+    Creation Date: ** for future sprint
+    Purpose: Watch value of loggedIn variable if it changes
+    Arguments: Old value and new value of loggedIn
+    Required: Vuex store file (implicit by calling this.$store...)
+    Return Value: None
+    */
     loggedIn(newValue, oldValue) {
       if (newValue) {
         this.$store.dispatch("read_workouts");
@@ -337,6 +362,14 @@ export default {
       this.$store.dispatch("update_admin", admin);
     }
   },
+  /*
+  Method Name: created
+  Creation Date: 01/21/20
+  Purpose: Call store method to load workouts if user is logged in
+  Arguments: None
+  Required: Vuex store file (implicit by calling this.$store...)
+  Return Value: None
+  */
   async created() {
     if (this.$store.state.loggedIn) {
       await this.$store.dispatch("read_workouts");
