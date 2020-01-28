@@ -341,27 +341,6 @@ export default {
   computed: {
     ...mapState(["workouts", "loggedIn"])
   },
-  watch: {
-    /*
-    Method Name: loggedIn
-    Creation Date: ** for future sprint
-    Purpose: Watch value of loggedIn variable if it changes
-    Arguments: Old value and new value of loggedIn (Boolean)
-    Required: Vuex store file (implicit by calling this.$store...)
-    Return Value: None
-    */
-    loggedIn(newValue, oldValue) {
-      if (newValue) {
-        this.$store.dispatch("read_workouts");
-      }
-      var token = this.$store.state.token;
-      var decodedToken = this.$store.state.token
-        ? this.JwtDecode(this.$store.state.token)
-        : "";
-      var admin = decodedToken ? decodedToken.admin : false;
-      this.$store.dispatch("update_admin", admin);
-    }
-  },
   /*
   Method Name: created
   Creation Date: 01/21/20

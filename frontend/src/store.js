@@ -195,7 +195,7 @@ export default new Vuex.Store({
     Creation Date: ** for future sprint
     Purpose: Submit user data to the backend then call set_token and set_firstName mutations
     Arguments: {commit} (Function, from store), userData (Object, data of new user)
-    Required: axios
+    Required: axios, router
     Return Value: None
     */
     register_user: ({ commit }, userData) => {
@@ -233,7 +233,7 @@ export default new Vuex.Store({
     Creation Date: ** for future sprint
     Purpose: Log user out by removing JWT and call set_token, set_firstName, and set_admin mutations
     Arguments: {commit} (Function from store)
-    Required: None
+    Required: router
     Return Value: None
     */
     logout_user: ({ commit }) => {
@@ -242,6 +242,18 @@ export default new Vuex.Store({
       commit("set_token", null);
       commit("set_firstName", "");
       commit("set_admin", false);
+      router.push("/");
+    },
+    /*
+    Method Name: update_admin
+    Creation Date: ** for future sprint
+    Purpose: Call set_admin mutation
+    Arguments: {commit} (Function from store), admin (Boolean, if logged in user is an admin)
+    Required: None
+    Return Value: None
+    */
+    update_admin: ({ commit }, admin) => {
+      commit("set_admin", admin);
     }
   }
 });

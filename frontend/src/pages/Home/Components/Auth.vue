@@ -104,6 +104,25 @@
 </template>
 
 <script>
+/*
+Author: Jian Chan, Gab Datiles, Hans Santos
+
+This is a course requirement for CS 192
+Software Engineering II under the
+supervision of Asst. Prof. Ma. Rowena C.
+Solamo of the Department of Computer
+Science, College of Engineering, University
+of the Philippines, Diliman for the AY 2019-
+2020.
+
+Code History:
+<New date> - Jian Chan - Create File, Add all imports
+
+File Creation Date: <New date>
+Development Group: GetUP
+Client Group: UP Diliman Students
+Purpose: Authorization (Auth) component for the website
+*/
 export default {
   data() {
     return {
@@ -114,6 +133,14 @@ export default {
     };
   },
   methods: {
+    /*
+    Method Name: signUp
+    Creation Date: 
+    Purpose: Validate user data then call register_user method from store with data
+    Arguments: User data (Object, implicit)
+    Required: Vuex store file (implicit by calling this.$store...)
+    Return Value: None
+    */
     async signUp() {
       await this.$validator.validateAll("signup").then(result => {
         if (result) {
@@ -128,6 +155,14 @@ export default {
         }
       });
     },
+    /*
+    Method Name: logIn
+    Creation Date: 
+    Purpose: Validate user credentials data then call login_user method from store with data
+    Arguments: User data (Object, implicit)
+    Required: Vuex store file (implicit by calling this.$store...)
+    Return Value: None
+    */
     logIn() {
       this.$validator.validateAll("login").then(result => {
         if (result) {
