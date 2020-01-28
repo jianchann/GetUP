@@ -13,9 +13,7 @@ import Navbar from "@/global/Navbar.vue";
 
 export default {
   data() {
-    return {
-      isactive: false
-    };
+    return {};
   },
   components: {
     Footer,
@@ -25,5 +23,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

@@ -291,7 +291,7 @@ export default {
     Method Name: gotoPage
     Creation Date: 01/20/20
     Purpose: Route url to specific page
-    Arguments: Path of page, ID for specific page
+    Arguments: Path of page (String), ID for specific page (Number)
     Required: None
     Return Value: None
     */
@@ -313,7 +313,7 @@ export default {
     Method Name: addWorkout
     Creation Date: 01/21/20
     Purpose: Validate workout data then call method from store with data
-    Arguments: Workout data (implicit)
+    Arguments: Workout data (Object, implicit)
     Required: Vuex store file (implicit by calling this.$store...)
     Return Value: None
     */
@@ -346,7 +346,7 @@ export default {
     Method Name: loggedIn
     Creation Date: ** for future sprint
     Purpose: Watch value of loggedIn variable if it changes
-    Arguments: Old value and new value of loggedIn
+    Arguments: Old value and new value of loggedIn (Boolean)
     Required: Vuex store file (implicit by calling this.$store...)
     Return Value: None
     */

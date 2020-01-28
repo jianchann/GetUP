@@ -42,7 +42,7 @@ export default new Vuex.Store({
     Method Name: set_admin
     Creation Date: ** for future sprint
     Purpose: Set admin variable in state to new value
-    Arguments: state, admin
+    Arguments: state (Object), admin (Boolean)
     Required: None
     Return Value: None
     */
@@ -53,7 +53,7 @@ export default new Vuex.Store({
     Method Name: set_token
     Creation Date: ** for future sprint
     Purpose: Set token variable in state to new value
-    Arguments: state, token
+    Arguments: state (Object), token (String)
     Required: None
     Return Value: None
     */
@@ -65,7 +65,7 @@ export default new Vuex.Store({
     Method Name: set_firstName
     Creation Date: ** for future sprint
     Purpose: Set firstName variable in state to new value
-    Arguments: state, firstName
+    Arguments: state (Object), firstName (String)
     Required: None
     Return Value: None
     */
@@ -77,7 +77,7 @@ export default new Vuex.Store({
     Method Name: set_workouts
     Creation Date: 01/22/20
     Purpose: Set workouts variable in state to new value
-    Arguments: state, workouts
+    Arguments: state (Object), workouts (Array)
     Required: None
     Return Value: None
     */
@@ -88,7 +88,7 @@ export default new Vuex.Store({
     Method Name: set_workout
     Creation Date: 01/22/20
     Purpose: Set workout variable in state to new value
-    Arguments: state, workout
+    Arguments: state (Object), workout (Object)
     Required: None
     Return Value: None
     */
@@ -109,7 +109,7 @@ export default new Vuex.Store({
     Method Name: read_workout
     Creation Date: 01/22/22
     Purpose: Read specific workout from backend, and call set_workout mutation
-    Arguments: {state, commit} (from store), workoutId (ID of workout)
+    Arguments: {state (Object), commit (Function)} (from store), workoutId (Number, ID of workout)
     Required: axios
     Return Value: None
     */
@@ -126,7 +126,7 @@ export default new Vuex.Store({
     Method Name: read_workouts
     Creation Date: 01/22/22
     Purpose: Read workouts from backend, and call set_workouts mutation
-    Arguments: {commit} (from store)
+    Arguments: {commit} (Function, from store)
     Required: axios
     Return Value: None
     */
@@ -139,7 +139,7 @@ export default new Vuex.Store({
     Method Name: create_workout
     Creation Date: 01/22/22
     Purpose: Submit new workout to backend, and call read_workouts mutation
-    Arguments: {commit, dispatch} (from store), workoutData (data object of new workout)
+    Arguments: {commit (Object), dispatch (Function)} (from store), workoutData (Object, data of new workout)
     Required: axios
     Return Value: None
     */
@@ -157,7 +157,7 @@ export default new Vuex.Store({
     Method Name: update_workout
     Creation Date: ** for future sprint
     Purpose: Submit updated workout data to backend, and call set_workout mutation
-    Arguments: {state, commit} (from store), workoutData (data object of updated workout)
+    Arguments: {state (Object), commit (Function)} (from store), workoutData (Object, Updated workout data)
     Required: axios
     Return Value: None
     */
@@ -175,7 +175,7 @@ export default new Vuex.Store({
     Method Name: delete_workout
     Creation Date: 01/22/22
     Purpose: Submit ID of workout to be deleted to the backend then route page to home page
-    Arguments: {state} (from store), workoutId (ID of workout)
+    Arguments: {state} (Object, from store), workoutId (Number, ID of workout)
     Required: axios
     Return Value: None
     */
@@ -194,7 +194,7 @@ export default new Vuex.Store({
     Method Name: register_user
     Creation Date: ** for future sprint
     Purpose: Submit user data to the backend then call set_token and set_firstName mutations
-    Arguments: {commit} (from store), userData (data object of new user)
+    Arguments: {commit} (Function, from store), userData (Object, data of new user)
     Required: axios
     Return Value: None
     */
@@ -213,7 +213,7 @@ export default new Vuex.Store({
     Method Name: login_user
     Creation Date: ** for future sprint
     Purpose: Submit user credentials to the backend and if login succeeds, then call set_token and set_firstName mutations
-    Arguments: {commit} (from store), userData (data object of user credentials)
+    Arguments: {commit} (Function, from store), userData (Object, data of user credentials)
     Required: axios
     Return Value: None
     */
@@ -232,8 +232,8 @@ export default new Vuex.Store({
     Method Name: logout_user
     Creation Date: ** for future sprint
     Purpose: Log user out by removing JWT and call set_token, set_firstName, and set_admin mutations
-    Arguments: {commit} (from store)
-    Required: axios
+    Arguments: {commit} (Function from store)
+    Required: None
     Return Value: None
     */
     logout_user: ({ commit }) => {
