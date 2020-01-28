@@ -1,3 +1,24 @@
+"""
+Author: Jian Chan, Gab Datiles, Hans Santos
+This is a course requirement for CS 192
+Software Engineering II under the
+supervision of Asst. Prof. Ma. Rowena C.
+Solamo of the Department of Computer
+Science, College of Engineering, University
+of the Philippines, Diliman for the AY 2019-
+2020.
+
+Code History:
+01/20/20 - Jian Chan - Create File, Add all imports, Initialize all methods
+01/21/20 - Jian Chan - Implement and finalize methods for view workout (multiple and single) and add workout
+01/22/20 - Hans Santos - Implement and finalize methods for delete workout
+
+File Creation Date: 01/20/20
+Development Group: GetUP
+Client Group: UP Diliman Students
+Purpose: Controller for all API calls related to the workout model/class
+"""
+
 from app import app, db, redis_store, utils
 from app.models import User, Workout, Review
 from app.auth_helpers import token_required
@@ -9,6 +30,14 @@ from werkzeug.utils import secure_filename
 import os
 import uuid
 
+"""
+Method Name: get_workouts
+Creation Date: 01/21/20
+Purpose: Get all workouts
+Arguments: None
+Required: Workout class from database
+Return Value: List of all workouts in json
+"""
 @app.route('/workout', methods=['GET'])
 # @token_required
 def get_workouts():
@@ -38,6 +67,14 @@ def get_workouts():
         })
     return jsonify(return_data)
 
+"""
+Method Name: get_workout
+Creation Date: 01/21/20
+Purpose: Get specific workouts
+Arguments: ID of workout, User requesting workout
+Required: Workout class from database, token_required from auth_helpers.py
+Return Value: Workout data in json
+"""
 @app.route('/workout/<int:id>', methods=['GET'])
 @token_required
 def get_workout(current_user, id):
@@ -65,6 +102,14 @@ def get_workout(current_user, id):
     }
     return jsonify(return_data)
 
+"""
+Method Name: create_workout
+Creation Date: 01/21/20
+Purpose: Add workout to the database
+Arguments: User adding workout, request data for the workout (implicit)
+Required: Workout class from database, token_required from auth_helpers.py
+Return Value: Success message in json
+"""
 @app.route('/workout', methods=['POST'])
 @token_required
 def create_workout(current_user):
@@ -113,6 +158,14 @@ def create_workout(current_user):
 
     return jsonify({'message': "New workout created."})
 
+"""
+Method Name: update_workout
+Creation Date: ** for future sprint
+Purpose: Update specific workout from the database
+Arguments: ID of workout, User updating workout, request data for the workout (implicit)
+Required: Workout class from database, token_required from auth_helpers.py
+Return Value: Success message in json
+"""
 @app.route('/workout/<int:id>', methods=['PUT'])
 @token_required
 def update_workout(current_user,id):
@@ -170,6 +223,14 @@ def update_workout(current_user,id):
     }
     return jsonify(return_data)
 
+"""
+Method Name: delete_workout
+Creation Date: 01/22/20
+Purpose: Delete workout from the database
+Arguments: ID of workout, User deleting workout
+Required: Workout class from database, token_required from auth_helpers.py
+Return Value: Success message in json
+"""
 @app.route('/workout/<int:id>', methods=['DELETE'])
 @token_required
 def delete_workout(current_user,id):
