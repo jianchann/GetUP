@@ -1,3 +1,25 @@
+/*
+Author: Jian Chan, Gab Datiles, Hans Santos
+
+This is a course requirement for CS 192
+Software Engineering II under the
+supervision of Asst. Prof. Ma. Rowena C.
+Solamo of the Department of Computer
+Science, College of Engineering, University
+of the Philippines, Diliman for the AY 2019-
+2020.
+
+Code History:
+01/20/20 - Jian Chan - Create File, Add all imports
+01/22/20 - Jian Chan - Implement and finalize methods for view workout/s and add workout
+01/22/20 - Hans Santos - Implement and finalize methods for delete workout
+
+File Creation Date: 01/20/20
+Development Group: GetUP
+Client Group: UP Diliman Students
+Purpose: Store for entire frontend (storage of data that persists, handle API calls to backend)
+*/
+
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
@@ -15,53 +37,61 @@ export default new Vuex.Store({
     admin: localStorage.getItem("admin") ? localStorage.getItem("admin") : false
   },
   mutations: {
-    add_review(state, data) {
-      var review = data.review;
-      var workoutId = data.workoutId;
-      for (var i = 0; i < state.workouts.length; i++) {
-        if (state.workouts[i].id != workoutId) {
-          continue;
-        }
-        state.workouts[i].reviews.push(review);
-        break;
-      }
-    },
-    remove_review(state, data) {
-      var reviewId = data.reviewId;
-      var workoutId = data.workoutId;
-      var newReviews = [];
-      for (var i = 0; i < state.workouts.length; i++) {
-        if (state.workouts[i].id != workoutId) {
-          continue;
-        }
-        for (var j = 0; j < state.workouts[i].reviews.length; j++) {
-          if (state.workouts[i].reviews[j].id != reviewId) {
-            newReviews.push(state.workouts[i].reviews[j]);
-          }
-        }
-        state.workouts[i].reviews = newReviews;
-        break;
-      }
-    },
-    //
-    // User mutations
-    //
+    // Auth mutations
+    /*
+    Method Name: set_admin
+    Creation Date: ** for future sprint
+    Purpose: Set admin variable in state to new value
+    Arguments: state, admin
+    Required: None
+    Return Value: None
+    */
     set_admin(state, admin) {
       state.admin = admin;
     },
+    /*
+    Method Name: set_token
+    Creation Date: ** for future sprint
+    Purpose: Set token variable in state to new value
+    Arguments: state, token
+    Required: None
+    Return Value: None
+    */
     set_token(state, token) {
       state.token = token;
       state.loggedIn = token ? true : false;
     },
+    /*
+    Method Name: set_firstName
+    Creation Date: ** for future sprint
+    Purpose: Set firstName variable in state to new value
+    Arguments: state, firstName
+    Required: None
+    Return Value: None
+    */
     set_firstName(state, firstName) {
       state.firstName = firstName;
     },
-    //
     // Workout mutations
-    //
+    /*
+    Method Name: set_workouts
+    Creation Date: ** for future sprint
+    Purpose: Set workouts variable in state to new value
+    Arguments: state, workouts
+    Required: None
+    Return Value: None
+    */
     set_workouts(state, workouts) {
       state.workouts = workouts;
     },
+    /*
+    Method Name: set_workout
+    Creation Date: ** for future sprint
+    Purpose: Set workout variable in state to new value
+    Arguments: state, workout
+    Required: None
+    Return Value: None
+    */
     set_workout(state, workout) {
       state.workout = workout;
     }
@@ -73,9 +103,7 @@ export default new Vuex.Store({
     deleteReview: ({ commit }, payload) => {
       commit("remove_review", payload);
     },
-    //
-    // Workout Functions
-    //
+    // Workout Actions
     read_workout: async ({ state, commit }, workoutId) => {
       await axios
         .get("/workout/" + workoutId, {
