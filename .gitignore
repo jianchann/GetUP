@@ -8,3 +8,4 @@ uploads/
 backend/.git
 backend/Procfile
 backend/runtime.txt
+backend/.gitignore
