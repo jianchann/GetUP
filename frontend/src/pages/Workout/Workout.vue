@@ -301,6 +301,28 @@
 </template>
 
 <script>
+/*
+Author: Jian Chan, Gab Datiles, Hans Santos
+
+This is a course requirement for CS 192
+Software Engineering II under the
+supervision of Asst. Prof. Ma. Rowena C.
+Solamo of the Department of Computer
+Science, College of Engineering, University
+of the Philippines, Diliman for the AY 2019-
+2020.
+
+Code History:
+01/20/20 - Jian Chan - Create File, Add all imports, Fix layout of home page
+01/22/20 - Jian Chan - Implement and finalize methods for view workouts, add workout, and HTML display
+01/22/20 - Gab Datiles - Implement only add workout available if no workout exists
+
+File Creation Date: 01/20/20
+Development Group: GetUP
+Client Group: UP Diliman Students
+Purpose: Home page for all workouts
+*/
+
 import { mapState } from "vuex";
 
 const Workout = {
@@ -364,9 +386,25 @@ const Workout = {
     this.workoutStatus = this.workout.status;
   },
   methods: {
+     /*
+    Method Name: GetImageUrl
+    Creation Date: 
+    Purpose: Route url to specific image
+    Arguments: Path of url
+    Required: None
+    Return Value: Path of Image
+    */
     GetImageUrl(url, folder = null) {
       return "/uploads/" + url;
     },
+    /*
+    Method Name: addReview
+    Creation Date:
+    Purpose: Validate review data then call method from store with data
+    Arguments: Review data (implicit)
+    Required: Vuex store file (implicit by calling this.$store...)
+    Return Value: None
+    */
     addReview() {
       this.$validator.validateAll().then(result => {
         if (result) {
@@ -401,9 +439,25 @@ const Workout = {
         }
       });
     },
+    /*
+    Method Name: openModal
+    Creation Date: 
+    Purpose: Open modal for adding workout
+    Arguments: None
+    Required: None
+    Return Value: None
+    */
     openModal() {
       this.$refs.addReview.show();
     },
+    /*
+    Method Name: deleteReview
+    Creation Date:
+    Purpose: 
+    Arguments: Review ID
+    Required: Existing Review
+    Return Value: None
+    */
     deleteReview(id) {
       if (id) {
         this.currentReview = id;
@@ -424,9 +478,25 @@ const Workout = {
         this.$refs.deleteReview.hide();
       }
     },
+    /*
+    Method Name: deleteWorkout
+    Creation Date:
+    Purpose: Delete Workout
+    Arguments: None
+    Required: Existing Workout
+    Return Value: None
+    */
     deleteWorkout() {
       this.$store.dispatch("delete_workout", this.id);
     },
+    /*
+    Method Name: editWorkout
+    Creation Date: 
+    Purpose: Edit Workout 
+    Arguments: None
+    Required: None
+    Return Value: None
+    */
     editWorkout() {
       this.$validator.validateAll().then(async result => {
         if (result) {
@@ -455,6 +525,14 @@ const Workout = {
         }
       });
     },
+    /*
+    Method Name: approveWorkout
+    Creation Date: 
+    Purpose: Updates workout to be approved
+    Arguments: None
+    Required: Existing Workout
+    Return Value: None
+    */
     approveWorkout() {
       this.workout.approved = true;
       this.$store.dispatch("update", workout);

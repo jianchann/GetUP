@@ -1,3 +1,23 @@
+"""
+Author: Jian Chan, Gab Datiles, Hans Santos
+This is a course requirement for CS 192
+Software Engineering II under the
+supervision of Asst. Prof. Ma. Rowena C.
+Solamo of the Department of Computer
+Science, College of Engineering, University
+of the Philippines, Diliman for the AY 2019-
+2020.
+
+Code History:
+01/20/20 - Jian Chan - Create File, Add all imports, Initialize all methods
+01/20/20 - Jian Chan - Set up schema for User, Workout, Review
+
+File Creation Date: 01/20/20
+Development Group: GetUP
+Client Group: UP Diliman Students
+Purpose: Models for User, Workout and Review
+"""
+
 from app import db
 from datetime import datetime,date
 from werkzeug.security import generate_password_hash, check_password_hash
