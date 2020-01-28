@@ -1,4 +1,4 @@
-from app import app, db, redis_store, utils
+from app import app, db, utils
 from app.models import User, Workout, Review
 from app.auth_helpers import token_required
 

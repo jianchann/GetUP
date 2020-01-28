@@ -1,4 +1,4 @@
-from app import app, db, models, auth_helpers, redis_store, utils
+from app import app, db, models, auth_helpers, utils
 
 import requests
 import os

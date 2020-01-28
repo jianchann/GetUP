@@ -1,20 +1,24 @@
 from app.utils import get_env_variable
 from flask import Flask
-from flask_redis import FlaskRedis
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import os
 
-POSTGRES_URL = get_env_variable("POSTGRES_URL")
-POSTGRES_USER = get_env_variable("POSTGRES_USER")
-POSTGRES_PASSWORD = get_env_variable("POSTGRES_PASSWORD")
-POSTGRES_DB = get_env_variable("POSTGRES_DB")
-POSTGRES_URL_BASE = get_env_variable("POSTGRES_URL_BASE")
+try:
+    POSTGRES_URL = get_env_variable("POSTGRES_URL")
+    POSTGRES_USER = get_env_variable("POSTGRES_USER")
+    POSTGRES_PASSWORD = get_env_variable("POSTGRES_PASSWORD")
+    POSTGRES_DB = get_env_variable("POSTGRES_DB")
+    POSTGRES_URL_BASE = get_env_variable("POSTGRES_URL_BASE")
 
-DB_URL = '{base}://{user}:{pw}@{url}/{db}'.format(base=POSTGRES_URL_BASE,
-    user=POSTGRES_USER, pw=POSTGRES_PASSWORD, url=POSTGRES_URL, db=POSTGRES_DB)
+    DB_URL = '{base}://{user}:{pw}@{url}/{db}'.format(base=POSTGRES_URL_BASE,
+        user=POSTGRES_USER, pw=POSTGRES_PASSWORD, url=POSTGRES_URL, db=POSTGRES_DB)
 
-APP_SECRET = get_env_variable("APP_SECRET")
+    APP_SECRET = get_env_variable("APP_SECRET")
+except:
+    DB_URL = 'postgres://ljhrjnhsvpbqfs:53a16329d15b7ecab64c5af909e85f4619a101c0d9cc538d501b8a12e5585181@ec2-174-129-32-215.compute-1.amazonaws.com:5432/ders8cfv6cu5hs'
+    APP_SECRET = 'secret_key'
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = APP_SECRET
@@ -26,11 +30,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-
-REDIS_URL = get_env_variable("REDIS_URL")
-app.config['REDIS_URL'] = "redis://{redis_url}/0".format(redis_url=REDIS_URL)
-
-redis_store = FlaskRedis(app)
 
 from app import models, utils, auth_helpers
 from app.views import *

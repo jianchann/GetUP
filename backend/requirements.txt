@@ -6,7 +6,6 @@ SQLAlchemy-Utils
 requests
 PyJWT
 pylint
-flask-redis
 psycopg2
 gunicorn
 psycopg2-binary
