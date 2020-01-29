@@ -4,7 +4,6 @@
         <!-- <transition> -->
         <router-view style="padding-top: 67px" />
         <!-- </transition> -->
-        <!-- <Footer></Footer> -->
     </div>
 </template>
 <script>
@@ -28,7 +27,6 @@ Development Group: GetUP
 Client Group: UP Diliman Students
 Purpose: Parent/master component for all pages in website
 */
-import Footer from "@/global/Footer.vue";
 import Navbar from "@/global/Navbar.vue";
 import { mapState } from "vuex";
 
@@ -37,7 +35,6 @@ export default {
         return {};
     },
     components: {
-        Footer,
         Navbar
     },
     methods: {},
@@ -77,7 +74,6 @@ export default {
             var decodedToken = this.$store.state.token
                 ? this.JwtDecode(this.$store.state.token)
                 : "";
-            console.log(decodedToken);
             var admin = decodedToken ? decodedToken.admin : false;
             this.$store.dispatch("update_admin", admin);
         }
