@@ -29,6 +29,7 @@ from flask import Flask, jsonify, g, render_template, redirect, request, abort
 from werkzeug.utils import secure_filename
 import os
 import uuid
+import boto3
 
 """
 Method Name: get_workouts
@@ -136,7 +137,24 @@ def create_workout(current_user):
 
     newFileName = str(autoGenFileName) + '.' + fileExt
 
-    file.save(os.path.join(app.config['UPLOAD_FOLDER'], newFileName))
+    try:
+        os.environ["POSTGRES_URL"]
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], newFileName))
+    except:
+        # S3 Bucket
+        s3 = boto3.client(
+        "s3",
+        aws_access_key_id="AKIAIWHTYSPQ34XT2QFQ",
+        aws_secret_access_key="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"
+        )
+        bucket_resource = s3
+
+        file.save(newFileName)
+        bucket_resource.upload_file(
+            Bucket = "getup-192",
+            Filename=newFileName,
+            Key=newFileName
+        )
 
     workout = Workout(
         title = title,
@@ -194,7 +212,25 @@ def update_workout(current_user,id):
         fileExt = filename.split('.')[-1]
         autoGenFileName = uuid.uuid4()
         newFileName = str(autoGenFileName) + '.' + fileExt
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], newFileName))
+
+        try:
+            os.environ["POSTGRES_URL"]
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], newFileName))
+        except:
+            # S3 Bucket
+            s3 = boto3.client(
+            "s3",
+            aws_access_key_id="AKIAIWHTYSPQ34XT2QFQ",
+            aws_secret_access_key="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"
+            )
+            bucket_resource = s3
+
+            file.save(newFileName)
+            bucket_resource.upload_file(
+                Bucket = "getup-192",
+                Filename=newFileName,
+                Key=newFileName
+            )
 
         workout.image = newFileName
 
