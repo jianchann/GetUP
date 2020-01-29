@@ -35,19 +35,6 @@
                 @click="$router.push('/')"
                 ><i class="fas fa-arrow-left fa-3x"></i
             ></b-button>
-            <div
-                style="margin-top: -50px; float: right"
-                class="d-flex flex-column align-items-center d-md-none"
-                v-if="loggedIn"
-            >
-                <h6 class="text-white p-0 mb-2">
-                    <i class="fas fa-user"></i>
-                    {{ this.$store.state.firstName }}
-                </h6>
-                <b-button variant="primary" size="md" @click="logOut()"
-                    >Logout</b-button
-                >
-            </div>
         </b-navbar>
         <b-button
             v-if="this.$route.name == 'Workout'"
@@ -58,19 +45,6 @@
             @click="$router.push('/')"
             ><i class="fas fa-arrow-left fa-3x"></i
         ></b-button>
-        <div
-            style="margin-top: -65px; margin-right: 10px; float: right; z-index: 2; position: relative;"
-            class="flex-column align-items-center d-none d-md-flex"
-            v-if="this.$store.state.loggedIn"
-        >
-            <h6 class="text-white p-0 mb-2">
-                <i class="fas fa-user"></i>
-                {{ this.$store.state.firstName }}
-            </h6>
-            <b-button variant="primary" size="md" @click="logOut()"
-                >Logout</b-button
-            >
-        </div>
     </div>
 </template>
 

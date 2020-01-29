@@ -31,7 +31,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-from app import models, utils, auth_helpers
+from app import models, utils
 from app.views import *
 
 @app.cli.command('resetdb')

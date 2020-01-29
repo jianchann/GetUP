@@ -2,15 +2,11 @@
     <div class="home">
         <Header />
 
-        <div v-if="loggedIn">
+        <div>
             <div class="mt-5 ml-3 mr-3">
                 <div class="d-flex justify-content-between">
                     <h1>Workouts</h1>
-                    <!-- <b-button variant="secondary" size="md" @click="openModal()">{{
-            this.$store.state.admin ? "Add Workout" : "Suggest Workout"
-          }}</b-button> -->
                     <b-button
-                        v-if="this.$store.state.admin"
                         variant="secondary"
                         size="md"
                         @click="openModal()"
@@ -35,44 +31,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- <div v-if="this.$store.state.admin" class="mt-5 ml-3 mr-3">
-                <div class="d-flex justify-content-between">
-                    <h1> Suggested Workouts </h1>
-                </div>    
-                <div class="container-fluid">
-                    <div class="row flex-row flex-nowrap overflow-auto">
-                        <div v-for="workout in this.workouts" :key="workout.id">
-                            <Card v-if="!workout.approved" :big="false" :img="workout.image" :title="workout.title" @click.native="gotoPage('workouts',workout.id)" >
-                            </Card>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-            <!-- 
-            <div class="d-none d-md-block">
-                <h1 class="pl-5"> Test </h1>
-                <div class="pl-3 d-flex flex-column align-items-center">
-                    <div class="pr-4">
-                        website
-                    </div>
-                    <div class="mr-4">
-                        webiste
-                    </div>
-                </div>
-            </div>
-
-            <div class="d-block d-md-none">
-                <h1 class="pl-5"> Test </h1>
-                <div class="pl-3 d-flex flex-column align-items-center">
-                    <div class="pr-4">
-                        mobile
-                    </div>
-                    <div class="mr-4">
-                        mobile
-                    </div>
-                </div>
-            </div> -->
 
             <b-modal ref="addWorkout" hide-footer title="New Workout">
                 <b-form-group
@@ -202,23 +160,7 @@
                     </div>
                 </b-form-group>
 
-                <div v-if="this.$store.state.admin" style="float: right">
-                    <b-button
-                        variant="primary"
-                        size="large"
-                        type="submit"
-                        @click="addWorkoutSuggestion()"
-                        >Submit as suggestion</b-button
-                    >
-                    <b-button
-                        variant="secondary"
-                        size="large"
-                        type="submit"
-                        @click="addWorkout()"
-                        >Submit</b-button
-                    >
-                </div>
-                <div v-else style="float: right">
+                <div style="float: right">
                     <b-button
                         variant="secondary"
                         size="large"
@@ -228,9 +170,6 @@
                     >
                 </div>
             </b-modal>
-        </div>
-        <div v-else class="d-flex justify-content-center mt-4">
-            <Auth></Auth>
         </div>
     </div>
 </template>
@@ -259,12 +198,11 @@ Purpose: Home page for all workouts
 */
 import Header from "@/pages/Home/Components/Header.vue";
 import Card from "@/global/Card.vue";
-import Auth from "@/pages/Home/Components/Auth.vue";
 import { mapState } from "vuex";
 
 export default {
     name: "home",
-    components: { Header, Card, Auth },
+    components: { Header, Card },
     data() {
         return {
             workoutTitle: null,
@@ -345,7 +283,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(["workouts", "loggedIn"])
+        ...mapState(["workouts"])
     },
     /*
     Method Name: created
@@ -356,9 +294,7 @@ export default {
     Return Value: None
     */
     async created() {
-        if (this.$store.state.loggedIn) {
-            await this.$store.dispatch("read_workouts");
-        }
+        await this.$store.dispatch("read_workouts");
     }
 };
 </script>

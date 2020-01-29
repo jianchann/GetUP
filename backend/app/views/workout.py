@@ -21,7 +21,6 @@ Purpose: Controller for all API calls related to the workout model/class
 
 from app import app, db, utils
 from app.models import User, Workout, Review
-from app.auth_helpers import token_required
 
 import requests
 import datetime
@@ -39,7 +38,6 @@ Required: Workout class from database
 Return Value: List of all workouts in json
 """
 @app.route('/workout', methods=['GET'])
-# @token_required
 def get_workouts():
     workouts = Workout.query.all()
     return_data = []
@@ -72,12 +70,11 @@ Method Name: get_workout
 Creation Date: 01/21/20
 Purpose: Get specific workouts
 Arguments: ID of workout (Int), User requesting workout (Object)
-Required: Workout class from database, token_required from auth_helpers (to protect route)
+Required: Workout class from database
 Return Value: Workout data in json
 """
 @app.route('/workout/<int:id>', methods=['GET'])
-@token_required
-def get_workout(current_user, id):
+def get_workout(id):
     workout = Workout.query.get(id)
     review_data = []
     for review in workout.reviews:
@@ -107,15 +104,11 @@ Method Name: create_workout
 Creation Date: 01/21/20
 Purpose: Add workout to the database
 Arguments: User adding workout (Object), request data for the workout (Object, implicit)
-Required: Workout class from database, token_required from auth_helpers (to protect route)
+Required: Workout class from database
 Return Value: Success message in json
 """
 @app.route('/workout', methods=['POST'])
-@token_required
-def create_workout(current_user):
-    if not current_user.admin:
-        abort(403,'User not allowed to create workout.')
-
+def create_workout():
     post_data = request.form
     title = post_data.get('title')
     location = post_data.get('location')
@@ -152,91 +145,22 @@ def create_workout(current_user):
     )
 
     db.session.add(workout)
-    current_user.workouts.append(workout)
 
     db.session.commit()
 
     return jsonify({'message': "New workout created."})
 
-"""
-Method Name: update_workout
-Creation Date: ** for future sprint
-Purpose: Update specific workout from the database
-Arguments: ID of workout (Int), User updating workout (Object), request data for the workout (Object, implicit)
-Required: Workout class from database, token_required from auth_helpers (to protect route)
-Return Value: Success message in json
-"""
-@app.route('/workout/<int:id>', methods=['PUT'])
-@token_required
-def update_workout(current_user,id):
-    if not current_user.admin:
-        # user is not admin
-        abort(403,'User not allowed to update workout.')
-
-    workout = Workout.query.get(id)
-    
-    print(request)
-    post_data = request.form
-    workout.title = post_data.get('title')
-    workout.location = post_data.get('location')
-    workout.best_times = post_data.get('best_times')
-    workout.duration = post_data.get('duration')
-    workout.materials = post_data.get('materials')
-    workout.difficulty = post_data.get('difficulty')
-    workout.people_count = post_data.get('people_count')
-    instructions = post_data.get('instructions')
-    workout.status = post_data.get('status')
-
-    file = request.files.get('file')
-    
-    if file:
-        filename = secure_filename(file.filename)
-        fileExt = filename.split('.')[-1]
-        autoGenFileName = uuid.uuid4()
-        newFileName = str(autoGenFileName) + '.' + fileExt
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], newFileName))
-
-        workout.image = newFileName
-
-    db.session.commit()
-
-    review_data = []
-    for review in workout.reviews:
-        review_data.append({
-            "body": review.body,
-            "rating": review.rating,
-            "user_first_name": review.user.first_name
-        })
-    return_data = {
-        "id": workout.id,
-        "title": workout.title,
-        "location": workout.location,
-        "best_times": workout.best_times,
-        "duration": workout.duration,
-        "materials": workout.materials,
-        "difficulty": workout.difficulty,
-        "people_count": workout.people_count,
-        "instructions": workout.instructions,
-        "status": workout.status,
-        "image": workout.image,
-        "reviews": review_data
-    }
-    return jsonify(return_data)
 
 """
 Method Name: delete_workout
 Creation Date: 01/22/20
 Purpose: Delete workout from the database if user is permitted to
 Arguments: ID of workout (Int), User deleting workout (Object)
-Required: Workout class from database, token_required from auth_helpers (to protect route)
+Required: Workout class from database
 Return Value: Success message in json
 """
 @app.route('/workout/<int:id>', methods=['DELETE'])
-@token_required
-def delete_workout(current_user,id):
-    if not current_user.admin:
-        abort(403,'User not allowed to delet workout.')
-
+def delete_workout(id):
     workout = Workout.query.get(id)
     db.session.delete(workout)
     db.session.commit()
