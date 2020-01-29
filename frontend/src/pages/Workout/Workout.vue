@@ -1,7 +1,7 @@
 <template>
     <div>
         <img
-            :src="GetImageUrl(this.workout.image)"
+            :src="getImageUrl(this.workout.image)"
             style="width: 100%; z-index:0; margin-bottom: -15px; height: 75vh; object-fit: cover"
         />
         <div class="workout-details-container">
@@ -332,33 +332,20 @@ of the Philippines, Diliman for the AY 2019-
 
 Code History:
 01/20/20 - Jian Chan - Create File, Add all imports, Fix layout of home page
-01/22/20 - Jian Chan - Implement and finalize methods for view workouts, add workout, and HTML display
-01/22/20 - Gab Datiles - Implement only add workout available if no workout exists
+01/22/20 - Jian Chan - Implement and finalize methods for view workout
+01/22/20 - Hans Santos - Implement and finalize methods for delete workout
 
 File Creation Date: 01/20/20
 Development Group: GetUP
 Client Group: UP Diliman Students
-Purpose: Home page for all workouts
+Purpose: Workout page to view specific workout
 */
 
 import { mapState } from "vuex";
 
 const Workout = {
     name: "Workout",
-    props: {
-        img: {
-            type: String,
-            default: null
-        },
-        title: {
-            type: String,
-            default: null
-        },
-        big: {
-            type: Boolean,
-            default: false
-        }
-    },
+    props: {},
     data() {
         return {
             id: null,
@@ -390,6 +377,14 @@ const Workout = {
     computed: {
         ...mapState(["workout"])
     },
+    /*
+    Method Name: created
+    Creation Date: 01/22/20
+    Purpose: Call store method to load workout
+    Arguments: None
+    Required: Vuex store file (implicit by calling this.$store...), Router (implicit by calling this.$route)
+    Return Value: None
+    */
     async created() {
         this.id = this.$route.params.id;
         await this.$store.dispatch("read_workout", this.$route.params.id);
@@ -405,21 +400,29 @@ const Workout = {
     },
     methods: {
         /*
-        Method Name: GetImageUrl
-        Creation Date: 
-        Purpose: Route url to specific image
-        Arguments: Path of url
+        Method Name: getImageUrl
+        Creation Date: 01/20/22
+        Purpose: Parse url (src) of image to be displayed
+        Arguments: filename (String, filename of image)
         Required: None
-        Return Value: Path of Image
+        Return Value: Path to Image
         */
-        GetImageUrl(url, folder = null) {
-            return "/uploads/" + url;
+        getImageUrl(filename) {
+            if (window.location.href.indexOf("localhost") >= 0) {
+                // Development mode
+                return "/uploads/" + filename;
+            } else {
+                return (
+                    "https://getup-192.s3-ap-southeast-1.amazonaws.com/" +
+                    filename
+                );
+            }
         },
         /*
         Method Name: addReview
         Creation Date:
         Purpose: Validate review data then call method from store with data
-        Arguments: Review data (implicit)
+        Arguments: Review data (Object, implicit)
         Required: Vuex store file (implicit by calling this.$store...)
         Return Value: None
         */
@@ -468,7 +471,7 @@ const Workout = {
         /*
         Method Name: openModal
         Creation Date: 
-        Purpose: Open modal for adding workout
+        Purpose: Open modal for adding review
         Arguments: None
         Required: None
         Return Value: None
@@ -479,9 +482,9 @@ const Workout = {
         /*
         Method Name: deleteReview
         Creation Date:
-        Purpose: 
-        Arguments: Review ID
-        Required: Existing Review
+        Purpose: Delete review
+        Arguments: id (Number, id of review to be deleted)
+        Required: Vuex store file (implicit by calling this.$store...)
         Return Value: None
         */
         deleteReview(id) {
@@ -508,8 +511,8 @@ const Workout = {
         Method Name: deleteWorkout
         Creation Date:
         Purpose: Delete Workout
-        Arguments: None
-        Required: Existing Workout
+        Arguments: id (Number, implicit from data, id of workout to be deleted)
+        Required: Vuex store file (implicit by calling this.$store...)
         Return Value: None
         */
         deleteWorkout() {
@@ -518,9 +521,9 @@ const Workout = {
         /*
         Method Name: editWorkout
         Creation Date: 
-        Purpose: Edit Workout 
-        Arguments: None
-        Required: None
+        Purpose: Validate workout data then call method from store with data
+        Arguments: Workout data (Object, implicit)
+        Required: Vuex store file (implicit by calling this.$store...)
         Return Value: None
         */
         editWorkout() {
