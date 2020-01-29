@@ -79,7 +79,15 @@ const Card = {
         Return Value: Path to image
         */
         getImageUrl(filename) {
-            return "/uploads/" + filename;
+            if (window.location.href.indexOf("localhost") >= 0) {
+                // Development mode
+                return "/uploads/" + filename;
+            } else {
+                return (
+                    "https://getup-192.s3-ap-southeast-1.amazonaws.com/" +
+                    filename
+                );
+            }
         }
     }
 };

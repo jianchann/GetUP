@@ -241,7 +241,7 @@ export default {
         },
         /*
         Method Name: openModal
-        Creation Date: 01/21/20
+        Creation Date: 01/22/20
         Purpose: Open modal for adding workout
         Arguments: None
         Required: None
@@ -252,7 +252,7 @@ export default {
         },
         /*
         Method Name: addWorkout
-        Creation Date: 01/21/20
+        Creation Date: 01/22/20
         Purpose: Validate workout data then call method from store with data
         Arguments: Workout data (Object, implicit)
         Required: Vuex store file (implicit by calling this.$store...)
@@ -287,8 +287,8 @@ export default {
     },
     /*
     Method Name: created
-    Creation Date: 01/21/20
-    Purpose: Call store method to load workouts if user is logged in
+    Creation Date: 01/22/20
+    Purpose: Call store method to load workouts
     Arguments: None
     Required: Vuex store file (implicit by calling this.$store...)
     Return Value: None
