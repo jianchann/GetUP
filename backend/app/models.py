@@ -26,7 +26,6 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(255), nullable=False)
     last_name = db.Column(db.String(255), nullable=False)
-    # picture_url = db.Column(db.String(255), nullable=True)
     password = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     admin = db.Column(db.Boolean, default=False, nullable=False)
@@ -34,9 +33,25 @@ class User(db.Model):
     workouts = db.relationship("Workout", backref="user")
     reviews = db.relationship("Review", backref="user")
 
+    """
+    Method Name: set_password
+    Creation Date: 
+    Purpose: Set passwrod of user
+    Arguments: self (Object, class method is being called from), password (String, password of user)
+    Required: None
+    Return Value: None
+    """
     def set_password(self, password):
         self.password = generate_password_hash(password)
 
+    """
+    Method Name: check_password
+    Creation Date: 
+    Purpose: Check passwrod of user
+    Arguments: self (Object, class method is being called from), password (String, password of user)
+    Required: None
+    Return Value: True/False (Boolean, if password checking is a success)
+    """
     def check_password(self, password):
         return check_password_hash(self.password, password)
 

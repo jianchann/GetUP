@@ -1,3 +1,24 @@
+"""
+Author: Jian Chan, Gab Datiles, Hans Santos
+This is a course requirement for CS 192
+Software Engineering II under the
+supervision of Asst. Prof. Ma. Rowena C.
+Solamo of the Department of Computer
+Science, College of Engineering, University
+of the Philippines, Diliman for the AY 2019-
+2020.
+
+Code History:
+- Create File, Add all imports, Initialize all methods
+- Implement and finalize methods for user login
+- Implement and finalize methods for user signup
+
+File Creation Date:
+Development Group: GetUP
+Client Group: UP Diliman Students
+Purpose: Controller for all API calls related to the user model/class
+"""
+
 from app import app, db, utils
 from app.models import User, Workout, Review
 
@@ -9,6 +30,14 @@ from flask import Flask, jsonify, g, render_template, redirect, request, abort
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
+"""
+Method Name: login
+Creation Date: 
+Purpose: Login user if credentials are valid
+Arguments: Request data for the credentials (Object, implicit)
+Required: User class from database, app.config (Application configurations)
+Return Value: JSON Object contianing JWT (String, token for authentication) and first_name (String, first name of user)
+"""
 @app.route('/user/login', methods=['POST'])
 def login():
     post_data = request.get_json()
@@ -28,6 +57,14 @@ def login():
     else:
         abort(422,'Incorrect credentials.')
 
+"""
+Method Name: create_user
+Creation Date: 
+Purpose: Create user if data are valid
+Arguments: Request data for the user data (Object, implicit)
+Required: User class from database, app.config (Application configurations)
+Return Value: JSON Object contianing JWT (String, token for authentication) and first_name (String, first name of user)
+"""
 @app.route('/user/register', methods=['POST'])
 def create_user():
     post_data = request.get_json()

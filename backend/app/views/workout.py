@@ -10,7 +10,7 @@ of the Philippines, Diliman for the AY 2019-
 
 Code History:
 01/20/20 - Jian Chan - Create File, Add all imports, Initialize all methods
-01/21/20 - Jian Chan - Implement and finalize methods for view workout (multiple and single) and add workout
+01/21/20 - Jian Chan - Implement and finalize methods for get workout (multiple and single) and add workout
 01/22/20 - Hans Santos - Implement and finalize methods for delete workout
 
 File Creation Date: 01/20/20
@@ -72,7 +72,7 @@ Method Name: get_workout
 Creation Date: 01/21/20
 Purpose: Get specific workouts
 Arguments: ID of workout (Int), User requesting workout (Object)
-Required: Workout class from database, token_required from auth_helpers.py
+Required: Workout class from database, token_required from auth_helpers (to protect route)
 Return Value: Workout data in json
 """
 @app.route('/workout/<int:id>', methods=['GET'])
@@ -107,7 +107,7 @@ Method Name: create_workout
 Creation Date: 01/21/20
 Purpose: Add workout to the database
 Arguments: User adding workout (Object), request data for the workout (Object, implicit)
-Required: Workout class from database, token_required from auth_helpers.py
+Required: Workout class from database, token_required from auth_helpers (to protect route)
 Return Value: Success message in json
 """
 @app.route('/workout', methods=['POST'])
@@ -163,7 +163,7 @@ Method Name: update_workout
 Creation Date: ** for future sprint
 Purpose: Update specific workout from the database
 Arguments: ID of workout (Int), User updating workout (Object), request data for the workout (Object, implicit)
-Required: Workout class from database, token_required from auth_helpers.py
+Required: Workout class from database, token_required from auth_helpers (to protect route)
 Return Value: Success message in json
 """
 @app.route('/workout/<int:id>', methods=['PUT'])
@@ -226,9 +226,9 @@ def update_workout(current_user,id):
 """
 Method Name: delete_workout
 Creation Date: 01/22/20
-Purpose: Delete workout from the database
+Purpose: Delete workout from the database if user is permitted to
 Arguments: ID of workout (Int), User deleting workout (Object)
-Required: Workout class from database, token_required from auth_helpers.py
+Required: Workout class from database, token_required from auth_helpers (to protect route)
 Return Value: Success message in json
 """
 @app.route('/workout/<int:id>', methods=['DELETE'])
