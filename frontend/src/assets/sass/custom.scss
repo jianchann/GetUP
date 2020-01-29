@@ -1,3 +1,23 @@
+/*
+Author: Jian Chan, Gab Datiles, Hans Santos
+
+This is a course requirement for CS 192
+Software Engineering II under the
+supervision of Asst. Prof. Ma. Rowena C.
+Solamo of the Department of Computer
+Science, College of Engineering, University
+of the Philippines, Diliman for the AY 2019-
+2020.
+
+Code History:
+01/20/20 - Jian Chan - Create File and initialize main CSS classes
+
+File Creation Date: 01/20/20
+Development Group: GetUP
+Client Group: UP Diliman Students
+Purpose: File for all custom CSS classes across entire frontend
+*/
+
 @import url("https://fonts.googleapis.com/css?family=Lato:400,700|Lora:400,400i|Raleway:400,500,700");
 $getup-secondary: #7b1113;
 $getup-primary-off-color: rgba(193, 231, 223, 0.62);
@@ -21,72 +41,72 @@ $body-background-color: $getup-white;
 $font-size-base: 0.8rem;
 //MIXINS
 @mixin flexCenter($direction) {
-  display: flex;
-  flex-direction: $direction;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    flex-direction: $direction;
+    justify-content: center;
+    align-items: center;
 }
 
 //Standard
 .btn-primary {
-  background-color: $button-background-color;
-  color: $button-color;
-  border: none;
-  transition: 0.3s;
-  &:hover {
-    background-color: $button-hover-color;
-    transform: scale(1.03);
-  }
+    background-color: $button-background-color;
+    color: $button-color;
+    border: none;
+    transition: 0.3s;
+    &:hover {
+        background-color: $button-hover-color;
+        transform: scale(1.03);
+    }
 }
 
 //Home
 .home {
-  margin-bottom: 0px !important;
+    margin-bottom: 0px !important;
 }
 
 .hover-pointer:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .hover-shadow:hover {
-  box-shadow: 0 0 10px grey;
-  border: 1px solid #80808085;
+    box-shadow: 0 0 10px grey;
+    border: 1px solid #80808085;
 }
 
 .filter-white {
-  filter: invert(100%) sepia(0%) saturate(7472%) hue-rotate(81deg)
-    brightness(101%) contrast(101%);
+    filter: invert(100%) sepia(0%) saturate(7472%) hue-rotate(81deg)
+        brightness(101%) contrast(101%);
 }
 
 .workout-details-container {
-  background: $getup-secondary;
-  color: $getup-white;
-  padding: 20px 20px;
-  border-radius: 15px 15px 0 0;
-  z-index: 5;
-  position: relative;
+    background: $getup-secondary;
+    color: $getup-white;
+    padding: 20px 20px;
+    border-radius: 15px 15px 0 0;
+    z-index: 5;
+    position: relative;
 }
 
 .rectangle {
-  width: 98%;
-  height: 1px;
-  background: $getup-white;
-  margin: 10px auto;
+    width: 98%;
+    height: 1px;
+    background: $getup-white;
+    margin: 10px auto;
 }
 
 .signup-login-container {
-  width: 100%;
-  max-width: 500px;
-  align-items: center;
+    width: 100%;
+    max-width: 500px;
+    align-items: center;
 }
 
 .tabs a {
-  color: grey;
+    color: grey;
 }
 
 .tabs a:hover,
 .tabs a.active {
-  color: $getup-secondary !important;
+    color: $getup-secondary !important;
 }
 
 // .page {
@@ -95,131 +115,131 @@ $font-size-base: 0.8rem;
 // }
 
 .card-image {
-  width: 100%;
-  height: 15vw;
-  object-fit: cover;
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
 }
 
 //Home Hero
 .sec-hero {
-  background: url("../images/header.jpg") center top no-repeat;
-  background-size: cover;
-  box-shadow: inset 0 0 0 600px rgba(88, 59, 59, 0.49);
-  height: 500px;
+    background: url("../images/header.jpg") center top no-repeat;
+    background-size: cover;
+    box-shadow: inset 0 0 0 600px rgba(88, 59, 59, 0.49);
+    height: 500px;
 }
 
 .sec-hero h1,
 .sec-hero p {
-  color: $getup-white;
-  text-align: left;
+    color: $getup-white;
+    text-align: left;
 }
 
 .sec-hero .hero-container {
-  padding: 50px 35px 50px 35px;
-  height: 100%;
+    padding: 50px 35px 50px 35px;
+    height: 100%;
 }
 
 //Home Value proposition
 .value-prop-wrapper {
-  padding: 50px 0 50px 0;
-  display: block;
-  .vp-item {
-    padding: 30px 20px 30px 20px;
-    // margin: 30px;
-    height: 100%;
-    width: 100%;
-    border-radius: 10px;
-    background-color: $getup-primary-off-color;
-    @include flexCenter(column);
-    i {
-      font-size: 3em;
-      padding-bottom: 25px;
-      color: $getup-primary;
+    padding: 50px 0 50px 0;
+    display: block;
+    .vp-item {
+        padding: 30px 20px 30px 20px;
+        // margin: 30px;
+        height: 100%;
+        width: 100%;
+        border-radius: 10px;
+        background-color: $getup-primary-off-color;
+        @include flexCenter(column);
+        i {
+            font-size: 3em;
+            padding-bottom: 25px;
+            color: $getup-primary;
+        }
+        h3 {
+            font-size: 1.5em;
+            font-weight: 500;
+            text-align: center;
+        }
+        p {
+            text-align: center;
+        }
     }
-    h3 {
-      font-size: 1.5em;
-      font-weight: 500;
-      text-align: center;
-    }
-    p {
-      text-align: center;
-    }
-  }
 }
 
 // How to apply-VueAgile styles
 .agile {
-  &__nav-button {
-    background: transparent;
-    border: none;
-    color: black;
-    cursor: pointer;
-    font-size: 24px;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    transition-duration: 0.3s;
-    width: 80px;
-    &:hover {
-      background-color: rgba(#000, 0.5);
-      opacity: 1;
-      color: white;
+    &__nav-button {
+        background: transparent;
+        border: none;
+        color: black;
+        cursor: pointer;
+        font-size: 24px;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        transition-duration: 0.3s;
+        width: 80px;
+        &:hover {
+            background-color: rgba(#000, 0.5);
+            opacity: 1;
+            color: white;
+        }
+        &--prev {
+            left: 0;
+        }
+        &--next {
+            right: 0;
+        }
     }
-    &--prev {
-      left: 0;
+    &__dots {
+        bottom: -40px;
+        left: 50%;
+        position: absolute;
+        transform: translateX(-50%);
     }
-    &--next {
-      right: 0;
+    &__dot {
+        margin: 0 10px;
+        button {
+            background-color: transparent;
+            border: 1px solid black;
+            border-radius: 50%;
+            cursor: pointer;
+            display: block;
+            height: 10px;
+            font-size: 0;
+            line-height: 0;
+            margin: 0;
+            padding: 0;
+            transition-duration: 0.3s;
+            width: 10px;
+        }
+        &--current,
+        &:hover {
+            button {
+                background-color: black;
+            }
+        }
     }
-  }
-  &__dots {
-    bottom: -40px;
-    left: 50%;
-    position: absolute;
-    transform: translateX(-50%);
-  }
-  &__dot {
-    margin: 0 10px;
-    button {
-      background-color: transparent;
-      border: 1px solid black;
-      border-radius: 50%;
-      cursor: pointer;
-      display: block;
-      height: 10px;
-      font-size: 0;
-      line-height: 0;
-      margin: 0;
-      padding: 0;
-      transition-duration: 0.3s;
-      width: 10px;
-    }
-    &--current,
-    &:hover {
-      button {
-        background-color: black;
-      }
-    }
-  }
 }
 
 // HowtApply-Slides styles
 .slide {
-  display: block;
-  height: auto;
-  min-height: 200px;
-  object-fit: cover;
-  width: 100%;
-  // min-width: 100%;
+    display: block;
+    height: auto;
+    min-height: 200px;
+    object-fit: cover;
+    width: 100%;
+    // min-width: 100%;
 }
 
 // slider
 .vue-slider-process {
-  background-color: $getup-primary !important;
+    background-color: $getup-primary !important;
 }
 
 .vue-slider-dot-handle {
-  border: 2px solid $getup-primary !important;
+    border: 2px solid $getup-primary !important;
 }
 
 // #selectColor div .custom-control-label {
@@ -228,32 +248,32 @@ $font-size-base: 0.8rem;
 // }
 //Footer
 .page-footer {
-  background-color: $getup-primary-light;
-  margin-top: 50px;
-  padding: 0px 0 20px 0;
-  text-align: center;
-  color: $getup-grey;
+    background-color: $getup-primary-light;
+    margin-top: 50px;
+    padding: 0px 0 20px 0;
+    text-align: center;
+    color: $getup-grey;
 }
 
 .accredited-by-img {
-  width: 100px;
+    width: 100px;
 }
 
 .footer-icon {
-  max-width: 25px;
-  max-height: 25px;
+    max-width: 25px;
+    max-height: 25px;
 }
 
 footer .icon-black i {
-  color: black;
+    color: black;
 }
 
 footer a {
-  color: rgb(78, 78, 78);
+    color: rgb(78, 78, 78);
 }
 
 footer a:hover {
-  color: rgb(51, 51, 51);
+    color: rgb(51, 51, 51);
 }
 
 @import "../../../node_modules/bootstrap/scss/bootstrap";

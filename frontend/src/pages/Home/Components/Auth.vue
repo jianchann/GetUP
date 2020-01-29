@@ -26,6 +26,7 @@
                             v-validate="'required'"
                             v-model="password"
                             name="password"
+                            type="password"
                             :state="
                                 errors.has('password', 'login') ? false : null
                             "
@@ -96,6 +97,7 @@
                             v-validate="'required'"
                             v-model="password"
                             name="password"
+                            type="password"
                             :state="
                                 errors.has('password', 'signup') ? false : null
                             "
