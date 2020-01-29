@@ -27,24 +27,24 @@ import Workout from "@/pages/Workout/Workout.vue";
 Vue.use(Router);
 
 export default new Router({
-  mode: "history",
-  // base: '/dist/',
-  routes: [
-    {
-      path: "/",
-      name: "home",
-      component: Home
-    },
-    {
-      path: "/workouts/:id",
-      name: "Workout",
-      component: Workout
-    },
-    {
-      path: "/404",
-      alias: "*",
-      name: "NotFound",
-      component: NotFound
-    }
-  ]
+    mode: "history",
+    // base: '/dist/',
+    routes: [
+        {
+            path: "/",
+            name: "home",
+            component: Home
+        },
+        {
+            path: "/workouts/:id",
+            name: "Workout",
+            component: Workout
+        },
+        {
+            path: "/404",
+            alias: "*",
+            name: "NotFound",
+            component: NotFound
+        }
+    ]
 });

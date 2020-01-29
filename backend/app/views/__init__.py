@@ -1,5 +1,5 @@
 # ADD NEW FILES HERE
-__all__ = ["views", "workout","user","review"]
+__all__ = ["workout","user","review"]
 
 from app import app, utils
 import requests
