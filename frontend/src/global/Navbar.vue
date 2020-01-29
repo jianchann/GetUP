@@ -21,7 +21,8 @@
       <!-- <b-navbar-toggle style="margin-top: -50px;"
         target="nav-collapse"
       ></b-navbar-toggle> -->
-      <div v-if="this.$route.name != 'Workout'"></div>
+      <div v-if="this.$route.name != 'Workout'"></div>  
+      <!-- for align right -->
       <b-button
         v-if="this.$route.name == 'Workout'"
         style="margin-top: -50px; float: left"
@@ -33,7 +34,7 @@
       ></b-button>
       <div
         style="margin-top: -50px; float: right"
-        class="d-flex flex-column align-items-center d-md-none"
+        class="d-flex flex-column align-items-center d-md-none" v-if = "loggedIn"
       >
         <h6 class="text-white p-0 mb-2">
           <i class="fas fa-user"></i>
@@ -88,6 +89,9 @@ Development Group: GetUP
 Client Group: UP Diliman Students
 Purpose: Home page for all workouts
 */
+
+import {mapState} from "vuex";
+
 const Navbar = {
   name: "Navbar",
   methods: {
@@ -102,6 +106,9 @@ const Navbar = {
     logOut() {
       this.$store.dispatch("logout_user");
     }
+  },
+  computed: {
+    ...mapState(["loggedIn"])
   }
 };
 
