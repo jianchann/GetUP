@@ -41,7 +41,7 @@ of the Philippines, Diliman for the AY 2019-
 
 Code History:
 01/20/20 - Jian Chan - Create File, Add all imports
-01/22/20 - Jian Chan - Finalize file and fix layout
+01/22/20 - Jian Chan - Finalize file, methods, and fix layout
 
 File Creation Date: 01/20/20
 Development Group: GetUP

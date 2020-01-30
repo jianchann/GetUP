@@ -11,6 +11,7 @@ of the Philippines, Diliman for the AY 2019-
 
 Code History:
 01/20/20 - Jian Chan - Create File, Add all imports
+01/22/20 - Jian Chan - Finalize all routes
 
 File Creation Date: 01/20/20
 Development Group: GetUP
