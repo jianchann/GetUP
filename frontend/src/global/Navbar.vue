@@ -73,23 +73,7 @@ Purpose: Home page for all workouts
 import { mapState } from "vuex";
 
 const Navbar = {
-    name: "Navbar",
-    methods: {
-        /*
-    Method Name: logOut
-    Creation Date:
-    Purpose: Call logout_user method from store
-    Arguments: None
-    Required: Vuex store file (implicit by calling this.$store...)
-    Return Value: None
-    */
-        logOut() {
-            this.$store.dispatch("logout_user");
-        }
-    },
-    computed: {
-        ...mapState(["loggedIn"])
-    }
+    name: "Navbar"
 };
 
 export default Navbar;
