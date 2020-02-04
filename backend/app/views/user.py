@@ -26,7 +26,7 @@ import requests
 import datetime
 import jwt
 from random import shuffle
-from flask import Flask, jsonify, g, render_template, redirect, request, abort
+from flask import Flask, jsonify, g, render_template, redirect, request
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -46,7 +46,7 @@ def login():
     user = User.query.filter(User.email == email).first()
     if user is None:
         # User does not exist
-        abort(422,'Account does not exist.')
+        return 'Account does not exist.', 422
     
     if user.check_password(password):
         token = jwt.encode({'id': user.id, 
@@ -55,7 +55,7 @@ def login():
 
         return jsonify({'token': token.decode('UTF-8'), 'first_name': user.first_name})
     else:
-        abort(422,'Incorrect credentials.')
+        return 'Incorrect credentials.', 422
 
 """
 Method Name: create_user
@@ -76,7 +76,7 @@ def create_user():
 
     users = User.query.filter((User.email == email)).all()
     if len(users) > 0:
-        abort(409,'Email already registered with existing account.')
+        return 'Email already registered with existing account.', 409
 
     if not len(User.query.all()):
         admin = True

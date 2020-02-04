@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div v-if="this.workout">
         <img
-            :src="getImageUrl(this.workout.image)"
+            :src="getImageUrl(this.workoutImage)"
             style="width: 100%; z-index:0; margin-bottom: -15px; height: 75vh; object-fit: cover"
         />
         <div class="workout-details-container">
@@ -361,7 +361,7 @@ const Workout = {
             workoutDifficulty: null,
             workoutInstructions: null,
             workoutImage: null,
-            workoutStatus: "Pending",
+            workoutStatus: null,
             difficultyOptions: [
                 { value: null, text: "Select one", disabled: true },
                 { value: "Beginner", text: "Beginner" },
@@ -388,15 +388,20 @@ const Workout = {
     async created() {
         this.id = this.$route.params.id;
         await this.$store.dispatch("read_workout", this.$route.params.id);
-        this.workoutTitle = this.workout.title;
-        this.workoutLocation = this.workout.location;
-        this.workoutTimes = this.workout.best_times;
-        this.workoutMaterials = this.workout.materials;
-        this.workoutDuration = this.workout.duration;
-        this.workoutPeople = this.workout.people_count;
-        this.workoutDifficulty = this.workout.difficulty;
-        this.workoutInstructions = this.workout.instructions;
-        this.workoutStatus = this.workout.status;
+        if (this.workout != null) {
+            this.workoutTitle = this.workout.title;
+            this.workoutLocation = this.workout.location;
+            this.workoutTimes = this.workout.best_times;
+            this.workoutMaterials = this.workout.materials;
+            this.workoutDuration = this.workout.duration;
+            this.workoutPeople = this.workout.people_count;
+            this.workoutDifficulty = this.workout.difficulty;
+            this.workoutInstructions = this.workout.instructions;
+            this.workoutStatus = this.workout.status;
+            this.workoutImage = this.workout.image;
+        } else {
+            this.$router.push("/404");
+        }
     },
     methods: {
         /*

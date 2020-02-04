@@ -26,7 +26,7 @@ from app.auth_helpers import token_required
 
 import requests
 import datetime
-from flask import Flask, jsonify, g, render_template, redirect, request, abort
+from flask import Flask, jsonify, g, render_template, redirect, request
 
 """
 Method Name: get_reviews
@@ -89,7 +89,7 @@ def delete_review(current_user,id):
     review = Review.query.get(id)
     
     if review.user_id != current_user.id and not current_user.admin:
-        abort(404,'User not authorized to delete this review.')
+        return 'User not authorized to delete this review.', 404
 
     db.session.delete(review)
     db.session.commit()

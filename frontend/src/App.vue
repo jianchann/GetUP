@@ -37,6 +37,9 @@ export default {
     components: {
         Navbar
     },
+    computed: {
+        ...mapState(["loggedIn"])
+    },
     methods: {},
     /*
     Method Name: created
@@ -53,9 +56,9 @@ export default {
             : "";
         var admin = decodedToken ? decodedToken.admin : false;
         this.$store.dispatch("update_admin", admin);
-    },
-    computed: {
-        ...mapState(["loggedIn"])
+        if (!this.loggedIn && this.$route.path != "/") {
+            this.$router.push("/");
+        }
     },
     watch: {
         /*

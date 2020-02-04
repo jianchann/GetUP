@@ -33,6 +33,10 @@
                         ></b-form-input>
                     </b-form-group>
 
+                    <div v-if="this.logInError" class="text-danger">
+                        * {{ this.logInError }}
+                    </div>
+
                     <b-button
                         variant="secondary"
                         size="large"
@@ -104,6 +108,10 @@
                         ></b-form-input>
                     </b-form-group>
 
+                    <div v-if="this.signUpError" class="text-danger">
+                        * {{ this.signUpError }}
+                    </div>
+
                     <b-button
                         variant="secondary"
                         size="large"
@@ -137,19 +145,22 @@ Development Group: GetUP
 Client Group: UP Diliman Students
 Purpose: Authorization (Auth) component for the website
 */
+
 export default {
     data() {
         return {
             firstName: null,
             lastName: null,
             email: null,
-            password: null
+            password: null,
+            signUpError: null,
+            logInError: null
         };
     },
     methods: {
         /*
         Method Name: signUp
-        Creation Date: 
+        Creation Date:
         Purpose: Validate user data then call register_user method from store with data
         Arguments: User data (Object, implicit)
         Required: Vuex store file (implicit by calling this.$store...)
@@ -166,14 +177,17 @@ export default {
                     };
                     this.$store
                         .dispatch("register_user", payload)
-                        .then(() => {});
+                        .then(() => {})
+                        .catch(error => {
+                            this.signUpError = error.data;
+                        });
                 } else {
                 }
             });
         },
         /*
         Method Name: logIn
-        Creation Date: 
+        Creation Date:
         Purpose: Validate user credentials data then call login_user method from store with data
         Arguments: User data (Object, implicit)
         Required: Vuex store file (implicit by calling this.$store...)
@@ -186,7 +200,12 @@ export default {
                         password: this.password,
                         email: this.email
                     };
-                    this.$store.dispatch("login_user", payload).then(() => {});
+                    this.$store
+                        .dispatch("login_user", payload)
+                        .then(() => {})
+                        .catch(error => {
+                            this.logInError = error.data;
+                        });
                 } else {
                 }
             });

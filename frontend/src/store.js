@@ -116,13 +116,15 @@ export default new Vuex.Store({
         Return Value: None
         */
         read_workout: async ({ state, commit }, workoutId) => {
+            commit("set_workout", null);
             await axios
                 .get("/workout/" + workoutId, {
                     headers: { "X-Access-Token": state.token }
                 })
                 .then(response => {
                     commit("set_workout", response.data);
-                });
+                })
+                .catch(error => {});
         },
         /*
         Method Name: read_workouts
@@ -200,8 +202,8 @@ export default new Vuex.Store({
         Required: axios, router
         Return Value: None
         */
-        register_user: ({ commit }, userData) => {
-            axios
+        register_user: async ({ commit }, userData) => {
+            return await axios
                 .post("/user/register", userData)
                 .then(response => {
                     commit("set_token", response.data.token);
@@ -209,7 +211,9 @@ export default new Vuex.Store({
                     localStorage.setItem("token", response.data.token);
                     localStorage.setItem("firstName", response.data.first_name);
                 })
-                .catch(error => {});
+                .catch(error => {
+                    throw error.response;
+                });
         },
         /*
         Method Name: login_user
@@ -219,8 +223,8 @@ export default new Vuex.Store({
         Required: axios
         Return Value: None
         */
-        login_user: ({ commit }, userData) => {
-            axios
+        login_user: async ({ commit }, userData) => {
+            return await axios
                 .post("/user/login", userData)
                 .then(response => {
                     commit("set_token", response.data.token);
@@ -228,7 +232,9 @@ export default new Vuex.Store({
                     localStorage.setItem("token", response.data.token);
                     localStorage.setItem("firstName", response.data.first_name);
                 })
-                .catch(error => {});
+                .catch(error => {
+                    throw error.response;
+                });
         },
         /*
         Method Name: logout_user
@@ -244,7 +250,7 @@ export default new Vuex.Store({
             commit("set_token", null);
             commit("set_firstName", "");
             commit("set_admin", false);
-            router.push("/");
+            return router.push("/");
         },
         /*
         Method Name: update_admin

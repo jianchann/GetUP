@@ -79,29 +79,32 @@ Return Value: Workout data in json
 @app.route('/workout/<int:id>', methods=['GET'])
 @token_required
 def get_workout(current_user, id):
-    workout = Workout.query.get(id)
-    review_data = []
-    for review in workout.reviews:
-        review_data.append({
-            "body": review.body,
-            "rating": review.rating,
-            "user_first_name": review.user.first_name
-        })
-    return_data = {
-        "id": workout.id,
-        "title": workout.title,
-        "location": workout.location,
-        "best_times": workout.best_times,
-        "duration": workout.duration,
-        "materials": workout.materials,
-        "difficulty": workout.difficulty,
-        "people_count": workout.people_count,
-        "instructions": workout.instructions,
-        "status": workout.status,
-        "image": workout.image,
-        "reviews": review_data
-    }
-    return jsonify(return_data)
+    try:
+        workout = Workout.query.get(id)
+        review_data = []
+        for review in workout.reviews:
+            review_data.append({
+                "body": review.body,
+                "rating": review.rating,
+                "user_first_name": review.user.first_name
+            })
+        return_data = {
+            "id": workout.id,
+            "title": workout.title,
+            "location": workout.location,
+            "best_times": workout.best_times,
+            "duration": workout.duration,
+            "materials": workout.materials,
+            "difficulty": workout.difficulty,
+            "people_count": workout.people_count,
+            "instructions": workout.instructions,
+            "status": workout.status,
+            "image": workout.image,
+            "reviews": review_data
+        }
+        return jsonify(return_data)
+    except:
+        return 'Workout does not exist.', 404
 
 """
 Method Name: create_workout
@@ -115,7 +118,7 @@ Return Value: Success message in json
 @token_required
 def create_workout(current_user):
     if not current_user.admin:
-        abort(403,'User not allowed to create workout.')
+        return 'User not allowed to create workout.', 403
 
     post_data = request.form
     title = post_data.get('title')
@@ -189,11 +192,10 @@ Return Value: Success message in json
 def update_workout(current_user,id):
     if not current_user.admin:
         # user is not admin
-        abort(403,'User not allowed to update workout.')
+        return 'User not allowed to update workout.', 403
 
     workout = Workout.query.get(id)
     
-    print(request)
     post_data = request.form
     workout.title = post_data.get('title')
     workout.location = post_data.get('location')
@@ -271,10 +273,13 @@ Return Value: Success message in json
 @token_required
 def delete_workout(current_user,id):
     if not current_user.admin:
-        abort(403,'User not allowed to delet workout.')
+        return 'User not allowed to delete workout.', 403
 
-    workout = Workout.query.get(id)
-    db.session.delete(workout)
-    db.session.commit()
+    try:
+        workout = Workout.query.get(id)
+        db.session.delete(workout)
+        db.session.commit()
+    except:
+        return 'Workout not found', 404
 
     return jsonify({'message': "Workout deleted"})
