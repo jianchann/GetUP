@@ -79,7 +79,10 @@ const Card = {
         Return Value: Path to image
         */
         getImageUrl(filename) {
-            if (window.location.href.indexOf("localhost") >= 0) {
+            if (
+                window.location.href.indexOf("localhost") >= 0 ||
+                window.location.href.indexOf("0.0.0.0") >= 0
+            ) {
                 // Development mode
                 return "/uploads/" + filename;
             } else {
