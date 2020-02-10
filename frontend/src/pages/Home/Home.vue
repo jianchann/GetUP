@@ -9,8 +9,15 @@
                     <!-- <b-button variant="secondary" size="md" @click="openModal()">{{
             this.$store.state.admin ? "Add Workout" : "Suggest Workout"
           }}</b-button> -->
-                    <b-button
+                    <!-- <b-button
                         v-if="this.$store.state.admin"
+                        variant="secondary"
+                        size="md"
+                        @click="openModal()"
+                    >
+                        Add Workout
+                    </b-button> -->
+                    <b-button
                         variant="secondary"
                         size="md"
                         @click="openModal()"
@@ -203,13 +210,13 @@
                 </b-form-group>
 
                 <div v-if="this.$store.state.admin" style="float: right">
-                    <b-button
+                    <!-- <b-button
                         variant="primary"
                         size="large"
                         type="submit"
                         @click="addWorkoutSuggestion()"
                         >Submit as suggestion</b-button
-                    >
+                    > -->
                     <b-button
                         variant="secondary"
                         size="large"
@@ -251,6 +258,7 @@ Code History:
 01/20/20 - Jian Chan - Create File, Add all imports, Fix layout of home page
 01/22/20 - Jian Chan - Implement and finalize methods for view workouts, add workout, and HTML display
 01/22/20 - Gab Datiles - Implement only add workout available if no workout exists
+02/04/20 - Gab Datiles - Implement reactive behavior of component when user logs in or logs out
 
 File Creation Date: 01/20/20
 Development Group: GetUP

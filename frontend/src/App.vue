@@ -21,6 +21,7 @@ of the Philippines, Diliman for the AY 2019-
 Code History:
 01/20/20 - Jian Chan - Create File, Add all imports
 01/22/20 - Gab Datiles - Fix and finalize layout
+02/04/20 - Gab Datiles - Implement protecting of routes and pages when user is not logged in (use of tokens)
 
 File Creation Date: 01/20/20
 Development Group: GetUP
@@ -43,7 +44,7 @@ export default {
     methods: {},
     /*
     Method Name: created
-    Creation Date: ** for future sprint
+    Creation Date: 02/04/20
     Purpose: Check if user is admin on first load of page then call update_admin from store
     Arguments: None
     Required: Vuex store file (implicit by calling this.$store...), JwtDecode (to decode JWT)
@@ -63,7 +64,7 @@ export default {
     watch: {
         /*
         Method Name: loggedIn
-        Creation Date: ** for future sprint
+        Creation Date: 02/04/20
         Purpose: Watch value of loggedIn variable if it changes
         Arguments: Old value and new value of loggedIn (Boolean)
         Required: Vuex store file (implicit by calling this.$store...), JwtDecode (to decode JWT) 

@@ -1,13 +1,14 @@
 <template>
     <div v-if="this.workout">
         <img
-            :src="getImageUrl(this.workoutImage)"
+            :src="getImageUrl(this.workout.image)"
             style="width: 100%; z-index:0; margin-bottom: -15px; height: 75vh; object-fit: cover"
         />
         <div class="workout-details-container">
             <div class="d-flex justify-content-between">
                 <h2>{{ this.workout.title }}</h2>
-                <div class="d-flex flex-column" v-if="this.$store.state.admin">
+                <!-- <div class="d-flex flex-column" v-if="this.$store.state.admin"> -->
+                <div class="d-flex flex-column">
                     <b-button
                         variant="secondary"
                         size="md"
@@ -398,7 +399,6 @@ const Workout = {
             this.workoutDifficulty = this.workout.difficulty;
             this.workoutInstructions = this.workout.instructions;
             this.workoutStatus = this.workout.status;
-            this.workoutImage = this.workout.image;
         } else {
             this.$router.push("/404");
         }
@@ -437,41 +437,6 @@ const Workout = {
         addReview() {
             this.$validator.validateAll().then(result => {
                 if (result) {
-                    var lastId;
-                    if (this.workout.reviews.length == 0) {
-                        lastId = 0;
-                    } else {
-                        lastId = this.workout.reviews[
-                            this.workout.reviews.length - 1
-                        ].id;
-                    }
-                    var review = {
-                        id: lastId + 1,
-                        username: this.$store.state.admin
-                            ? "testAdmin"
-                            : "testUser",
-                        body: this.reviewBody,
-                        rating: this.reviewRating
-                    };
-                    var payload = {
-                        review: review,
-                        workoutId: this.id
-                    };
-                    this.$store.dispatch("createReview", payload);
-                    (this.reviewBody = null),
-                        (this.reviewRating = null),
-                        this.$refs.addReview.hide();
-                    this.workouts = this.$store.state.workouts;
-                    for (
-                        var i = 0;
-                        i < this.$store.state.workouts.length;
-                        i++
-                    ) {
-                        if (this.$store.state.workouts[i].id == this.id) {
-                            this.workout = this.$store.state.workouts[i];
-                            break;
-                        }
-                    }
                 } else {
                 }
             });

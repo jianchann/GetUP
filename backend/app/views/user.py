@@ -9,9 +9,9 @@ of the Philippines, Diliman for the AY 2019-
 2020.
 
 Code History:
-- Create File, Add all imports, Initialize all methods
-- Implement and finalize methods for user login
-- Implement and finalize methods for user signup
+02/04/20 - Jian Chan - Create File, Add all imports, Initialize all methods
+02/04/20 - Hans Santos - Implement and finalize methods for user login
+02/04/20 - Jian Chan - Implement and finalize methods for user register
 
 File Creation Date:
 Development Group: GetUP
@@ -32,7 +32,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 """
 Method Name: login
-Creation Date: 
+Creation Date: 02/04/20
 Purpose: Login user if credentials are valid
 Arguments: Request data for the credentials (Object, implicit)
 Required: User class from database, app.config (Application configurations)
@@ -58,15 +58,15 @@ def login():
         return 'Incorrect credentials.', 422
 
 """
-Method Name: create_user
-Creation Date: 
+Method Name: register
+Creation Date: 02/04/20
 Purpose: Create user if data are valid
 Arguments: Request data for the user data (Object, implicit)
 Required: User class from database, app.config (Application configurations)
 Return Value: JSON Object contianing JWT (String, token for authentication) and first_name (String, first name of user)
 """
 @app.route('/user/register', methods=['POST'])
-def create_user():
+def register():
     post_data = request.get_json()
     first_name = post_data.get('first_name')
     last_name = post_data.get('last_name')

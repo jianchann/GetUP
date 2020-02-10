@@ -9,8 +9,8 @@ of the Philippines, Diliman for the AY 2019-
 2020.
 
 Code History:
-- Create File, Add all imports, Initialize all methods
-- Implement and finalize methods for token_required decorator
+02/04/20 - Jian Chan - Create File, Add all imports, Initialize all methods
+02/04/20 - Gab Datiles - Implement and finalize methods for token_required decorator
 
 File Creation Date:
 Development Group: GetUP

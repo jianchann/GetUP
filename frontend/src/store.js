@@ -13,6 +13,8 @@ Code History:
 01/20/20 - Jian Chan - Create File, Add all imports
 01/22/20 - Jian Chan - Implement and finalize methods for view workout/s and add workout
 01/22/20 - Hans Santos - Implement and finalize method for delete workout
+02/04/20 - Jian Chan - Implement and finalize method for register user
+02/04/20 - Hans Santos - Implement and finalize method for login and logout
 
 File Creation Date: 01/20/20
 Development Group: GetUP
@@ -117,7 +119,7 @@ export default new Vuex.Store({
         */
         read_workout: async ({ state, commit }, workoutId) => {
             commit("set_workout", null);
-            await axios
+            return await axios
                 .get("/workout/" + workoutId, {
                     headers: { "X-Access-Token": state.token }
                 })
@@ -130,14 +132,18 @@ export default new Vuex.Store({
         Method Name: read_workouts
         Creation Date: 01/22/22
         Purpose: Read workouts from backend, and call set_workouts mutation
-        Arguments: {commit} (Function, from store)
+        Arguments: {state (Object), commit (Function)} (from store)
         Required: axios
         Return Value: None
         */
-        read_workouts: ({ commit }) => {
-            axios.get("/workout").then(response => {
-                commit("set_workouts", response.data);
-            });
+        read_workouts: async ({ state, commit }) => {
+            return await axios
+                .get("/workout", {
+                    headers: { "X-Access-Token": state.token }
+                })
+                .then(response => {
+                    commit("set_workouts", response.data);
+                });
         },
         /*
         Method Name: create_workout
@@ -147,8 +153,8 @@ export default new Vuex.Store({
         Required: axios
         Return Value: None
         */
-        create_workout: ({ state, dispatch }, workoutData) => {
-            axios
+        create_workout: async ({ state, dispatch }, workoutData) => {
+            return await axios
                 .post("/workout", workoutData, {
                     headers: { "X-Access-Token": state.token }
                 })
@@ -165,8 +171,8 @@ export default new Vuex.Store({
         Required: axios
         Return Value: None
         */
-        update_workout: ({ state, commit }, workoutData) => {
-            axios
+        update_workout: async ({ state, commit }, workoutData) => {
+            return await axios
                 .put("/workout/" + workoutData.id, workoutData.data, {
                     headers: { "X-Access-Token": state.token }
                 })
@@ -183,8 +189,8 @@ export default new Vuex.Store({
         Required: axios
         Return Value: None
         */
-        delete_workout: ({ state }, workoutId) => {
-            axios
+        delete_workout: async ({ state }, workoutId) => {
+            return await axios
                 .delete("/workout/" + workoutId, {
                     headers: { "X-Access-Token": state.token }
                 })
@@ -196,7 +202,7 @@ export default new Vuex.Store({
         // Auth Actions
         /*
         Method Name: register_user
-        Creation Date: ** for future sprint
+        Creation Date: 02/04/20
         Purpose: Submit user data to the backend then call set_token and set_firstName mutations
         Arguments: {commit} (Function, from store), userData (Object, data of new user)
         Required: axios, router
@@ -217,7 +223,7 @@ export default new Vuex.Store({
         },
         /*
         Method Name: login_user
-        Creation Date: ** for future sprint
+        Creation Date: 02/04/20
         Purpose: Submit user credentials to the backend and if login succeeds, then call set_token and set_firstName mutations
         Arguments: {commit} (Function, from store), userData (Object, data of user credentials)
         Required: axios
@@ -238,7 +244,7 @@ export default new Vuex.Store({
         },
         /*
         Method Name: logout_user
-        Creation Date: ** for future sprint
+        Creation Date: 02/04/20
         Purpose: Log user out by removing JWT and call set_token, set_firstName, and set_admin mutations
         Arguments: {commit} (Function from store)
         Required: router
@@ -254,8 +260,8 @@ export default new Vuex.Store({
         },
         /*
         Method Name: update_admin
-        Creation Date: ** for future sprint
-        Purpose: Call set_admin mutation
+        Creation Date: 02/04/20
+        Purpose: Call set_admin mutation with new admin value
         Arguments: {commit} (Function from store), admin (Boolean, if logged in user is an admin)
         Required: None
         Return Value: None

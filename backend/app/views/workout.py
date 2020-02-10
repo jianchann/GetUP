@@ -12,6 +12,7 @@ Code History:
 01/20/20 - Jian Chan - Create File, Add all imports, Initialize all methods
 01/21/20 - Jian Chan - Implement and finalize methods for get workout (multiple and single) and add workout
 01/22/20 - Hans Santos - Implement and finalize methods for delete workout
+02/04/20 - Gab Datiles - Implement protecting of API routes from non-authenticated users
 
 File Creation Date: 01/20/20
 Development Group: GetUP
@@ -35,13 +36,13 @@ import boto3
 Method Name: get_workouts
 Creation Date: 01/21/20
 Purpose: Get all workouts
-Arguments: None
+Arguments: User requesting workouts (Object)
 Required: Workout class from database
 Return Value: List of all workouts in json
 """
 @app.route('/workout', methods=['GET'])
-# @token_required
-def get_workouts():
+@token_required
+def get_workouts(current_user):
     workouts = Workout.query.all()
     return_data = []
     for workout in workouts:
@@ -72,7 +73,7 @@ def get_workouts():
 Method Name: get_workout
 Creation Date: 01/21/20
 Purpose: Get specific workouts
-Arguments: ID of workout (Int), User requesting workout (Object)
+Arguments: User requesting workout (Object), ID of workout (Int)
 Required: Workout class from database, token_required from auth_helpers (to protect route)
 Return Value: Workout data in json
 """
@@ -117,8 +118,8 @@ Return Value: Success message in json
 @app.route('/workout', methods=['POST'])
 @token_required
 def create_workout(current_user):
-    if not current_user.admin:
-        return 'User not allowed to create workout.', 403
+    # if not current_user.admin:
+    #     return 'User not allowed to create workout.', 403
 
     post_data = request.form
     title = post_data.get('title')
@@ -183,16 +184,15 @@ def create_workout(current_user):
 Method Name: update_workout
 Creation Date: ** for future sprint
 Purpose: Update specific workout from the database
-Arguments: ID of workout (Int), User updating workout (Object), request data for the workout (Object, implicit)
+Arguments: User updating workout (Object), ID of workout (Int), request data for the workout (Object, implicit)
 Required: Workout class from database, token_required from auth_helpers (to protect route)
 Return Value: Success message in json
 """
 @app.route('/workout/<int:id>', methods=['PUT'])
 @token_required
 def update_workout(current_user,id):
-    if not current_user.admin:
-        # user is not admin
-        return 'User not allowed to update workout.', 403
+    # if not current_user.admin:
+    #     return 'User not allowed to update workout.', 403
 
     workout = Workout.query.get(id)
     
@@ -272,8 +272,8 @@ Return Value: Success message in json
 @app.route('/workout/<int:id>', methods=['DELETE'])
 @token_required
 def delete_workout(current_user,id):
-    if not current_user.admin:
-        return 'User not allowed to delete workout.', 403
+    # if not current_user.admin:
+    #     return 'User not allowed to delete workout.', 403
 
     try:
         workout = Workout.query.get(id)

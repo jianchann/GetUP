@@ -138,9 +138,11 @@ of the Philippines, Diliman for the AY 2019-
 2020.
 
 Code History:
-<New date> - Jian Chan - Create File, Add all imports
+02/04/20 - Jian Chan - Create File, Add all imports
+02/04/20 - Jian Chan - Implement registering user that leads to also logging in
+02/04/20 - Hans Santos - Implement login
 
-File Creation Date: <New date>
+File Creation Date: 02/04/20
 Development Group: GetUP
 Client Group: UP Diliman Students
 Purpose: Authorization (Auth) component for the website
@@ -160,7 +162,7 @@ export default {
     methods: {
         /*
         Method Name: signUp
-        Creation Date:
+        Creation Date: 02/04/20
         Purpose: Validate user data then call register_user method from store with data
         Arguments: User data (Object, implicit)
         Required: Vuex store file (implicit by calling this.$store...)
@@ -187,7 +189,7 @@ export default {
         },
         /*
         Method Name: logIn
-        Creation Date:
+        Creation Date: 02/04/20
         Purpose: Validate user credentials data then call login_user method from store with data
         Arguments: User data (Object, implicit)
         Required: Vuex store file (implicit by calling this.$store...)
