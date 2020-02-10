@@ -101,13 +101,6 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        // Review Actions
-        createReview: ({ commit }, payload) => {
-            commit("add_review", payload);
-        },
-        deleteReview: ({ commit }, payload) => {
-            commit("remove_review", payload);
-        },
         // Workout Actions
         /*
         Method Name: read_workout
@@ -160,24 +153,6 @@ export default new Vuex.Store({
                 })
                 .then(response => {
                     dispatch("read_workouts");
-                })
-                .catch(error => {});
-        },
-        /*
-        Method Name: update_workout
-        Creation Date: ** for future sprint
-        Purpose: Submit updated workout data to backend, and call set_workout mutation
-        Arguments: {state (Object), commit (Function)} (from store), workoutData (Object, Updated workout data)
-        Required: axios
-        Return Value: None
-        */
-        update_workout: async ({ state, commit }, workoutData) => {
-            return await axios
-                .put("/workout/" + workoutData.id, workoutData.data, {
-                    headers: { "X-Access-Token": state.token }
-                })
-                .then(response => {
-                    commit("set_workout", response.data);
                 })
                 .catch(error => {});
         },
