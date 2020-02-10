@@ -495,26 +495,7 @@ const Workout = {
         Required: Vuex store file (implicit by calling this.$store...)
         Return Value: None
         */
-        deleteReview(id) {
-            if (id) {
-                this.currentReview = id;
-                this.$refs.deleteReview.show();
-            } else {
-                var payload = {
-                    reviewId: this.currentReview,
-                    workoutId: this.id
-                };
-                this.$store.dispatch("deleteReview", payload);
-                this.workouts = this.$store.state.workouts;
-                for (var i = 0; i < this.$store.state.workouts.length; i++) {
-                    if (this.$store.state.workouts[i].id == this.id) {
-                        this.workout = this.$store.state.workouts[i];
-                        break;
-                    }
-                }
-                this.$refs.deleteReview.hide();
-            }
-        },
+        deleteReview(id) {},
         /*
         Method Name: deleteWorkout
         Creation Date:
@@ -570,10 +551,7 @@ const Workout = {
         Required: Existing Workout
         Return Value: None
         */
-        approveWorkout() {
-            this.workout.approved = true;
-            this.$store.dispatch("update", workout);
-        }
+        approveWorkout() {}
     }
 };
 
