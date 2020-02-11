@@ -25,9 +25,9 @@ from app import app, models
 
 """
 Method Name: token_required
-Creation Date: 
+Creation Date: 02/04/20
 Purpose: Login user if credentials are valid
-Arguments: Request data for HTTP request (Object, implicit)
+Arguments: function to wrap (Object), Request data for HTTP request (Object, implicit)
 Required: User class from database, app.config (Application Configurations)
 Return Value: JSON Object contianing JWT (String, token for authentication) and first_name (String, first name of user)
 """
