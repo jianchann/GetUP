@@ -55,7 +55,7 @@ export default new Vuex.Store({
         },
         /*
         Method Name: set_token
-        Creation Date: ** for future sprint
+        Creation Date: 02/04/20
         Purpose: Set token variable in state to new value
         Arguments: state (Object), token (String)
         Required: None
@@ -67,7 +67,7 @@ export default new Vuex.Store({
         },
         /*
         Method Name: set_firstName
-        Creation Date: ** for future sprint
+        Creation Date: 02/04/20
         Purpose: Set firstName variable in state to new value
         Arguments: state (Object), firstName (String)
         Required: None
