@@ -29,7 +29,7 @@ Creation Date: 02/04/20
 Purpose: Check if user is logged in before continuing with original function call
 Arguments: Function to wrap -- original function being called (Object), Request data for HTTP request (Object, implicit)
 Required: User class from database, app.config (Application Configurations)
-Return Value: JSON Object contianing JWT (String, token for authentication) and first_name (String, first name of user)
+Return Value: Function call of original function with current user logged in (Object)
 """
 def token_required(f):
     @wraps(f)
