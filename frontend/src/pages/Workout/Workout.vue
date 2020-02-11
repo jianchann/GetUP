@@ -463,7 +463,7 @@ const Workout = {
         deleteReview(id) {},
         /*
         Method Name: deleteWorkout
-        Creation Date:
+        Creation Date: 01/22/20
         Purpose: Delete Workout
         Arguments: id (Number, implicit from data, id of workout to be deleted)
         Required: Vuex store file (implicit by calling this.$store...)
