@@ -89,6 +89,7 @@ of the Philippines, Diliman for the AY 2019-
 Code History:
 01/20/20 - Jian Chan - Create File, Add all imports
 01/22/20 - Gab Datiles - Fix and finalize layout
+02/04/20 - Hans Santos - Implement logout
 
 File Creation Date: 01/20/20
 Development Group: GetUP
@@ -102,13 +103,13 @@ const Navbar = {
     name: "Navbar",
     methods: {
         /*
-    Method Name: logOut
-    Creation Date:
-    Purpose: Call logout_user method from store
-    Arguments: None
-    Required: Vuex store file (implicit by calling this.$store...)
-    Return Value: None
-    */
+        Method Name: logOut
+        Creation Date: 02/04/20
+        Purpose: Call logout_user method from store
+        Arguments: None
+        Required: Vuex store file (implicit by calling this.$store...)
+        Return Value: None
+        */
         logOut() {
             this.$store.dispatch("logout_user");
         }
