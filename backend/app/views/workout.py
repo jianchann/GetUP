@@ -46,13 +46,6 @@ def get_workouts(current_user):
     workouts = Workout.query.all()
     return_data = []
     for workout in workouts:
-        review_data = []
-        for review in workout.reviews:
-            review_data.append({
-                "body": review.body,
-                "rating": review.rating,
-                "user_first_name": review.user.first_name
-            })
         return_data.append({
             "id": workout.id,
             "title": workout.title,
@@ -65,7 +58,6 @@ def get_workouts(current_user):
             "instructions": workout.instructions,
             "status": workout.status,
             "image": workout.image,
-            "reviews": review_data
         })
     return jsonify(return_data)
 
@@ -85,9 +77,11 @@ def get_workout(current_user, id):
         review_data = []
         for review in workout.reviews:
             review_data.append({
+                "id": review.id,
                 "body": review.body,
                 "rating": review.rating,
-                "user_first_name": review.user.first_name
+                "user_first_name": review.user.first_name,
+                "user_id": review.user.id
             })
         return_data = {
             "id": workout.id,
@@ -241,6 +235,7 @@ def update_workout(current_user,id):
     review_data = []
     for review in workout.reviews:
         review_data.append({
+            "id": review.id,
             "body": review.body,
             "rating": review.rating,
             "user_first_name": review.user.first_name

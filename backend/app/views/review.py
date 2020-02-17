@@ -29,25 +29,8 @@ import datetime
 from flask import Flask, jsonify, g, render_template, redirect, request
 
 """
-Method Name: get_reviews
-Creation Date: 
-Purpose: Get all reviews
-Arguments: None
-Required: Review class from database, token_required from auth_helpers (to protect route)
-Return Value: List of all reviews in json
-"""
-@app.route('/review', methods=['GET'])
-# @token_required
-def get_reviews():
-    reviews = Review.query.all()
-    return_data = []
-    for review in reviews:
-        return_data.append(review)
-    return jsonify(return_data)
-
-"""
 Method Name: create_review
-Creation Date: 
+Creation Date: 02/20/22
 Purpose: Add review to the database
 Arguments: User adding workout (Object), request data for the review (Object, implicit)
 Required: Review class from database, token_required from auth_helpers (to protect route)

@@ -102,11 +102,55 @@ export default new Vuex.Store({
     },
     actions: {
         // Review Actions
-        createReview: ({ commit }, payload) => {
-            commit("add_review", payload);
+        /*
+        Method Name: create_review
+        Creation Date: 02/20/22
+        Purpose: Submit new review to backend. Then, read workout again from backend and call set_workout mutation.
+        Arguments: {state (Object), commit (Function)} (from store), reviewData (Object, data of new review)
+        Required: axios
+        Return Value: axios Promise
+        */
+        create_review: async ({ state, commit }, reviewData) => {
+            return await axios
+                .post("/review", reviewData, {
+                    headers: { "X-Access-Token": state.token }
+                })
+                .then(async response => {
+                    return await axios
+                        .get("/workout/" + reviewData.workout_id, {
+                            headers: { "X-Access-Token": state.token }
+                        })
+                        .then(response => {
+                            commit("set_workout", response.data);
+                        })
+                        .catch(error => {});
+                })
+                .catch(error => {});
         },
-        deleteReview: ({ commit }, payload) => {
-            commit("remove_review", payload);
+        /*
+        Method Name: delete_workout
+        Creation Date: ***
+        Purpose: Submit ID of review to be deleted to the backend. Then, read workout again from backend and call set_workout mutation.
+        Arguments: {state (Object), commit (Function)} (from store), reviewId (Number, ID of review)
+        Required: axios
+        Return Value: axios Promise
+        */
+        delete_review: async ({ state, commit }, reviewId) => {
+            return await axios
+                .delete("/review/" + reviewId, {
+                    headers: { "X-Access-Token": state.token }
+                })
+                .then(async response => {
+                    return await axios
+                        .get("/workout/" + state.workout.id, {
+                            headers: { "X-Access-Token": state.token }
+                        })
+                        .then(response => {
+                            commit("set_workout", response.data);
+                        })
+                        .catch(error => {});
+                })
+                .catch(error => {});
         },
         // Workout Actions
         /*
@@ -115,7 +159,7 @@ export default new Vuex.Store({
         Purpose: Read specific workout from backend, and call set_workout mutation
         Arguments: {state (Object), commit (Function)} (from store), workoutId (Number, ID of workout)
         Required: axios
-        Return Value: None
+        Return Value: axios Promise
         */
         read_workout: async ({ state, commit }, workoutId) => {
             commit("set_workout", null);
@@ -134,7 +178,7 @@ export default new Vuex.Store({
         Purpose: Read workouts from backend, and call set_workouts mutation
         Arguments: {state (Object), commit (Function)} (from store)
         Required: axios
-        Return Value: None
+        Return Value: axios Promise
         */
         read_workouts: async ({ state, commit }) => {
             return await axios
@@ -149,9 +193,9 @@ export default new Vuex.Store({
         Method Name: create_workout
         Creation Date: 01/22/22
         Purpose: Submit new workout to backend, and call read_workouts mutation
-        Arguments: {commit (Object), dispatch (Function)} (from store), workoutData (Object, data of new workout)
+        Arguments: {state (Object), dispatch (Function)} (from store), workoutData (Object, data of new workout)
         Required: axios
-        Return Value: None
+        Return Value: Promise
         */
         create_workout: async ({ state, dispatch }, workoutData) => {
             return await axios
@@ -169,7 +213,7 @@ export default new Vuex.Store({
         Purpose: Submit updated workout data to backend, and call set_workout mutation
         Arguments: {state (Object), commit (Function)} (from store), workoutData (Object, Updated workout data)
         Required: axios
-        Return Value: None
+        Return Value: axios Promise
         */
         update_workout: async ({ state, commit }, workoutData) => {
             return await axios
@@ -187,7 +231,7 @@ export default new Vuex.Store({
         Purpose: Submit ID of workout to be deleted to the backend then route page to home page
         Arguments: {state} (Object, from store), workoutId (Number, ID of workout)
         Required: axios
-        Return Value: None
+        Return Value: axios Promise
         */
         delete_workout: async ({ state }, workoutId) => {
             return await axios
@@ -206,7 +250,7 @@ export default new Vuex.Store({
         Purpose: Submit user data to the backend then call set_token and set_firstName mutations
         Arguments: {commit} (Function, from store), userData (Object, data of new user)
         Required: axios, router
-        Return Value: None
+        Return Value: axios Promise
         */
         register_user: async ({ commit }, userData) => {
             return await axios
@@ -227,7 +271,7 @@ export default new Vuex.Store({
         Purpose: Submit user credentials to the backend and if login succeeds, then call set_token and set_firstName mutations
         Arguments: {commit} (Function, from store), userData (Object, data of user credentials)
         Required: axios
-        Return Value: None
+        Return Value: Promise
         */
         login_user: async ({ commit }, userData) => {
             return await axios
@@ -256,7 +300,8 @@ export default new Vuex.Store({
             commit("set_token", null);
             commit("set_firstName", "");
             commit("set_admin", false);
-            return router.push("/");
+            router.push("/");
+            return;
         },
         /*
         Method Name: update_admin

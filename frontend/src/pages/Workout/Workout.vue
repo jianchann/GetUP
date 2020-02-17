@@ -61,72 +61,291 @@
             <div class="rectangle" />
             <div class="d-flex justify-content-between mb-3">
                 <h5>Reviews</h5>
-                <!-- <b-button variant="light" size="sm" @click="openModal()">
-                Add
-                </b-button> -->
+                <b-button variant="light" size="sm" v-b-modal.addReview>
+                    Add
+                </b-button>
             </div>
-            <div
-                v-for="review in this.workout.reviews"
-                :key="review.id"
-                style="margin-bottom: 10px"
-            >
-                <b
-                    ><div
-                        style="margin-left: 15px"
+            <div v-if="this.workout">
+                <div
+                    v-for="review in this.workout.reviews"
+                    :key="review.id"
+                    style="margin-bottom: 10px"
+                >
+                    <b
+                        ><div
+                            style="margin-left: 15px"
+                            class="d-flex justify-content-between"
+                        >
+                            <div>{{ review.user_first_name }}</div>
+                            <div>{{ review.rating }}/5</div>
+                        </div></b
+                    >
+                    <div
+                        style="margin-left: 25px"
                         class="d-flex justify-content-between"
                     >
-                        <div>{{ review.user_first_name }}</div>
-                        <div>{{ review.rating }}/5</div>
-                    </div></b
-                >
-                <div
-                    style="margin-left: 25px"
-                    class="d-flex justify-content-between"
-                >
-                    {{ review.body }}
-                    <b-button
-                        v-if="$store.state.admin"
-                        variant="secondary"
-                        size="sm"
-                        @click="deleteReview(review.id)"
-                    >
-                        <i class="fas fa-trash"></i>
-                    </b-button>
+                        {{ review.body }}
+                        <b-button
+                            v-if="
+                                $store.state.admin || userId == review.user_id
+                            "
+                            variant="secondary"
+                            size="sm"
+                            @click="
+                                currentReviewId = review.id;
+                                $refs.deleteReview.show();
+                            "
+                        >
+                            <i class="fas fa-trash"></i>
+                        </b-button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- <b-modal ref="addReview" hide-footer title="Add Review">
-      <b-form-group label="Review Body">
-        <b-form-input
-          required
-          v-validate="'required'"
-          v-model="reviewBody"
-          name="reviewBody"
-          :state="errors.has('reviewBody') ? false : null"
-        ></b-form-input>
-      </b-form-group>
-      <b-form-group label="Review Rating (out of 5)">
-        <b-form-input
-          required
-          v-validate="'required'"
-          v-model="reviewRating"
-          name="reviewRating"
-          :state="errors.has('reviewRating') ? false : null"
-        ></b-form-input>
-      </b-form-group>
+        <!-- Add Review Modal -->
+        <b-modal id="addReview" ref="addReview" hide-footer title="Add Review">
+            <form @submit.prevent="addReview()" data-vv-scope="addReview">
+                <b-form-group label="Rating - 1 (lowest) to 5 (highest)">
+                    <b-form-input
+                        v-validate="'required|between:1,5'"
+                        v-model="reviewRating"
+                        name="reviewRating"
+                        type="number"
+                        :state="
+                            errors.has('reviewRating', 'addReview')
+                                ? false
+                                : null
+                        "
+                    ></b-form-input>
+                </b-form-group>
+                <b-form-group label="Comments">
+                    <b-form-textarea
+                        v-validate="'required'"
+                        v-model="reviewBody"
+                        name="reviewBody"
+                        :state="
+                            errors.has('reviewBody', 'addReview') ? false : null
+                        "
+                        rows="2"
+                        max-rows="4"
+                    ></b-form-textarea>
+                </b-form-group>
 
-      <div style="float: right">
-        <b-button
-          variant="secondary"
-          size="large"
-          type="submit"
-          @click="addReview()"
-          >Submit</b-button
+                <div style="float: right">
+                    <b-button variant="secondary" size="large" type="submit"
+                        >Submit</b-button
+                    >
+                </div>
+            </form>
+        </b-modal>
+
+        <!-- Delete Review Modal -->
+        <b-modal
+            id="deleteReview"
+            ref="deleteReview"
+            hide-footer
+            title="Delete this Review?"
         >
-      </div>
-    </b-modal> -->
+            <div class="d-flex justify-content-around">
+                <b-button
+                    variant="primary"
+                    size="large"
+                    @click="$refs.deleteReview.hide()"
+                    >No</b-button
+                >
+                <b-button
+                    variant="secondary"
+                    size="large"
+                    type="submit"
+                    @click="deleteReview(currentReviewId)"
+                    >Yes</b-button
+                >
+            </div>
+        </b-modal>
 
+        <!-- Edit Workout Modal -->
+        <b-modal
+            ref="editWorkout"
+            id="editWorkout"
+            hide-footer
+            title="Update Workout"
+        >
+            <form @submit.prevent="editWorkout()" data-vv-scope="editWorkout">
+                <b-form-group
+                    label="Title"
+                    :invalid-feedback="errors.first('title', 'editWorkout')"
+                >
+                    <b-form-input
+                        v-validate="'required'"
+                        v-model="workoutTitle"
+                        name="title"
+                        :state="
+                            errors.has('title', 'editWorkout') ? false : null
+                        "
+                    ></b-form-input>
+                </b-form-group>
+                <b-form-group
+                    label="Location"
+                    :invalid-feedback="errors.first('location', 'editWorkout')"
+                >
+                    <b-form-input
+                        v-validate="'required'"
+                        v-model="workoutLocation"
+                        name="location"
+                        :state="
+                            errors.has('location', 'editWorkout') ? false : null
+                        "
+                    ></b-form-input>
+                </b-form-group>
+                <b-form-group
+                    label="Duration (in Mins)"
+                    :invalid-feedback="errors.first('duration', 'editWorkout')"
+                >
+                    <b-form-input
+                        v-validate="'required|between:1,120'"
+                        v-model="workoutDuration"
+                        type="number"
+                        name="duration"
+                        :state="
+                            errors.has('duration', 'editWorkout') ? false : null
+                        "
+                    ></b-form-input>
+                </b-form-group>
+                <b-form-group
+                    label="Best Times"
+                    :invalid-feedback="
+                        errors.first('best times', 'editWorkout')
+                    "
+                >
+                    <b-form-input
+                        v-validate="'required'"
+                        v-model="workoutTimes"
+                        name="best times"
+                        :state="
+                            errors.has('best times', 'editWorkout')
+                                ? false
+                                : null
+                        "
+                    ></b-form-input>
+                </b-form-group>
+                <b-form-group
+                    label="Materials"
+                    :invalid-feedback="errors.first('materials', 'editWorkout')"
+                >
+                    <b-form-textarea
+                        v-validate="'required'"
+                        v-model="workoutMaterials"
+                        name="materials"
+                        rows="2"
+                        max-rows="4"
+                        :state="
+                            errors.has('materials', 'editWorkout')
+                                ? false
+                                : null
+                        "
+                    ></b-form-textarea>
+                </b-form-group>
+
+                <b-form-group
+                    label="Difficulty"
+                    :invalid-feedback="
+                        errors.first('difficulty', 'editWorkout')
+                    "
+                >
+                    <b-form-select
+                        v-model="workoutDifficulty"
+                        :options="difficultyOptions"
+                        v-validate="'required'"
+                        name="difficulty"
+                        :state="
+                            errors.has('difficulty', 'editWorkout')
+                                ? false
+                                : null
+                        "
+                    ></b-form-select>
+                </b-form-group>
+
+                <b-form-group
+                    label="Minimum Number of Participants"
+                    :invalid-feedback="
+                        errors.first('participant count', 'editWorkout')
+                    "
+                >
+                    <b-form-input
+                        v-model="workoutPeople"
+                        v-validate="'required|between:1,30'"
+                        name="participant count"
+                        type="number"
+                        :state="
+                            errors.has('participant count', 'editWorkout')
+                                ? false
+                                : null
+                        "
+                    ></b-form-input>
+                </b-form-group>
+
+                <b-form-group
+                    label="Instructions"
+                    :invalid-feedback="
+                        errors.first('instructions', 'editWorkout')
+                    "
+                >
+                    <b-form-textarea
+                        v-model="workoutInstructions"
+                        v-validate="'required'"
+                        name="instructions"
+                        :state="
+                            errors.has('instructions', 'editWorkout')
+                                ? false
+                                : null
+                        "
+                        rows="2"
+                        max-rows="4"
+                    ></b-form-textarea>
+                </b-form-group>
+
+                <b-form-group label="Status">
+                    <b-form-select
+                        v-model="workoutStatus"
+                        :options="statusOptions"
+                        name="status"
+                    ></b-form-select>
+                </b-form-group>
+
+                <b-form-group
+                    label="Image (Skip if will not be updated)"
+                    :invalid-feedback="errors.first('image', 'editWorkout')"
+                    :state="!errors.has('image', 'editWorkout')"
+                >
+                    <div class="dropZone">
+                        <b-form-file
+                            accept="image/*"
+                            v-model="workoutImage"
+                            placeholder="Choose a file or drop it here..."
+                            drop-placeholder="Drop file here..."
+                            v-validate="'mimes:image/*'"
+                            name="image"
+                            :state="
+                                errors.has('image', 'editWorkout')
+                                    ? false
+                                    : null
+                            "
+                            id="image_upload"
+                            ref="image_upload"
+                        ></b-form-file>
+                    </div>
+                </b-form-group>
+
+                <div style="float: right">
+                    <b-button variant="secondary" size="large" type="submit"
+                        >Submit</b-button
+                    >
+                </div>
+            </form>
+        </b-modal>
+
+        <!-- Delete Workout Modal -->
         <b-modal
             id="deleteWorkout"
             ref="deleteWorkout"
@@ -146,173 +365,6 @@
                     type="submit"
                     @click="deleteWorkout()"
                     >Yes</b-button
-                >
-            </div>
-        </b-modal>
-
-        <b-modal
-            id="deleteReview"
-            ref="deleteReview"
-            hide-footer
-            title="Delete this Review?"
-        >
-            <div class="d-flex justify-content-around">
-                <b-button
-                    variant="primary"
-                    size="large"
-                    @click="$refs.deleteReview.hide()"
-                    >No</b-button
-                >
-                <b-button
-                    variant="secondary"
-                    size="large"
-                    type="submit"
-                    @click="deleteReview()"
-                    >Yes</b-button
-                >
-            </div>
-        </b-modal>
-
-        <b-modal
-            ref="editWorkout"
-            id="editWorkout"
-            hide-footer
-            title="Update Workout"
-        >
-            <b-form-group
-                label="Title"
-                :invalid-feedback="errors.first('title')"
-            >
-                <b-form-input
-                    v-validate="'required'"
-                    v-model="workoutTitle"
-                    name="title"
-                    :state="errors.has('title') ? false : null"
-                ></b-form-input>
-            </b-form-group>
-            <b-form-group
-                label="Location"
-                :invalid-feedback="errors.first('location')"
-            >
-                <b-form-input
-                    v-validate="'required'"
-                    v-model="workoutLocation"
-                    name="location"
-                    :state="errors.has('location') ? false : null"
-                ></b-form-input>
-            </b-form-group>
-            <b-form-group
-                label="Duration (in Mins)"
-                :invalid-feedback="errors.first('duration')"
-            >
-                <b-form-input
-                    v-validate="'required|between:1,120'"
-                    v-model="workoutDuration"
-                    type="number"
-                    name="duration"
-                    :state="errors.has('duration') ? false : null"
-                ></b-form-input>
-            </b-form-group>
-            <b-form-group
-                label="Best Times"
-                :invalid-feedback="errors.first('best times')"
-            >
-                <b-form-input
-                    v-validate="'required'"
-                    v-model="workoutTimes"
-                    name="best times"
-                    :state="errors.has('best times') ? false : null"
-                ></b-form-input>
-            </b-form-group>
-            <b-form-group
-                label="Materials"
-                :invalid-feedback="errors.first('materials')"
-            >
-                <b-form-textarea
-                    v-validate="'required'"
-                    v-model="workoutMaterials"
-                    name="materials"
-                    rows="2"
-                    max-rows="4"
-                    :state="errors.has('materials') ? false : null"
-                ></b-form-textarea>
-            </b-form-group>
-
-            <b-form-group
-                label="Difficulty"
-                :invalid-feedback="errors.first('difficulty')"
-            >
-                <b-form-select
-                    v-model="workoutDifficulty"
-                    :options="difficultyOptions"
-                    v-validate="'required'"
-                    name="difficulty"
-                    :state="errors.has('difficulty') ? false : null"
-                ></b-form-select>
-            </b-form-group>
-
-            <b-form-group
-                label="Minimum Number of Participants"
-                :invalid-feedback="errors.first('participant count')"
-            >
-                <b-form-input
-                    v-model="workoutPeople"
-                    v-validate="'required|between:1,30'"
-                    name="participant count"
-                    type="number"
-                    :state="errors.has('participant count') ? false : null"
-                ></b-form-input>
-            </b-form-group>
-
-            <b-form-group
-                label="Instructions"
-                :invalid-feedback="errors.first('instructions')"
-            >
-                <b-form-textarea
-                    v-model="workoutInstructions"
-                    v-validate="'required'"
-                    name="instructions"
-                    :state="errors.has('instructions') ? false : null"
-                    rows="2"
-                    max-rows="4"
-                ></b-form-textarea>
-            </b-form-group>
-
-            <b-form-group label="Status">
-                <b-form-select
-                    v-model="workoutStatus"
-                    :options="statusOptions"
-                    name="status"
-                ></b-form-select>
-            </b-form-group>
-
-            <b-form-group
-                label="Image (Skip if will not be updated)"
-                :invalid-feedback="errors.first('image')"
-                :state="!errors.has('image')"
-            >
-                <div class="dropZone">
-                    <b-form-file
-                        accept="image/*"
-                        v-model="workoutImage"
-                        placeholder="Choose a file or drop it here..."
-                        drop-placeholder="Drop file here..."
-                        v-validate="'mimes:image/*'"
-                        name="image"
-                        :state="errors.has('image') ? false : null"
-                        id="image_upload"
-                        ref="image_upload"
-                    ></b-form-file>
-                </div>
-            </b-form-group>
-
-            <div style="float: right">
-                <b-button
-                    variant="secondary"
-                    size="large"
-                    type="submit"
-                    @click="editWorkout()"
-                    >Submit</b-button
                 >
             </div>
         </b-modal>
@@ -352,7 +404,7 @@ const Workout = {
             id: null,
             reviewBody: null,
             reviewRating: null,
-            currentReview: null,
+            currentReviewId: null,
             workoutTitle: null,
             workoutLocation: null,
             workoutTimes: null,
@@ -363,6 +415,7 @@ const Workout = {
             workoutInstructions: null,
             workoutImage: null,
             workoutStatus: null,
+            workoutReviews: null,
             difficultyOptions: [
                 { value: null, text: "Select one", disabled: true },
                 { value: "Beginner", text: "Beginner" },
@@ -372,7 +425,8 @@ const Workout = {
             statusOptions: [
                 { value: "Pending", text: "Pending" },
                 { value: "Approved", text: "Approved" }
-            ]
+            ],
+            userId: null
         };
     },
     computed: {
@@ -381,7 +435,7 @@ const Workout = {
     /*
     Method Name: created
     Creation Date: 01/22/20
-    Purpose: Call store method to load workout
+    Purpose: Call store method to load workout and relevant details
     Arguments: None
     Required: Vuex store file (implicit by calling this.$store...), Router (implicit by calling this.$route)
     Return Value: None
@@ -399,6 +453,11 @@ const Workout = {
             this.workoutDifficulty = this.workout.difficulty;
             this.workoutInstructions = this.workout.instructions;
             this.workoutStatus = this.workout.status;
+            var token = this.$store.state.token;
+            var decodedToken = this.$store.state.token
+                ? this.JwtDecode(this.$store.state.token)
+                : null;
+            this.userId = decodedToken ? decodedToken.id : null;
         } else {
             this.$router.push("/404");
         }
@@ -428,39 +487,40 @@ const Workout = {
         },
         /*
         Method Name: addReview
-        Creation Date:
+        Creation Date: 02/20/22
         Purpose: Validate review data then call method from store with data
         Arguments: Review data (Object, implicit)
         Required: Vuex store file (implicit by calling this.$store...)
         Return Value: None
         */
         addReview() {
-            this.$validator.validateAll().then(result => {
+            this.$validator.validateAll("addReview").then(async result => {
                 if (result) {
+                    var payload = {
+                        body: this.reviewBody,
+                        rating: this.reviewRating,
+                        workout_id: this.id
+                    };
+                    await this.$store.dispatch("create_review", payload);
+                    this.$refs.addReview.hide();
+                    this.reviewBody = null;
+                    this.reviewRating = null;
                 } else {
                 }
             });
         },
         /*
-        Method Name: openModal
-        Creation Date: 
-        Purpose: Open modal for adding review
-        Arguments: None
-        Required: None
-        Return Value: None
-        */
-        openModal() {
-            this.$refs.addReview.show();
-        },
-        /*
         Method Name: deleteReview
-        Creation Date:
+        Creation Date: ***
         Purpose: Delete review
         Arguments: id (Number, id of review to be deleted)
         Required: Vuex store file (implicit by calling this.$store...)
         Return Value: None
         */
-        deleteReview(id) {},
+        async deleteReview(id) {
+            await this.$store.dispatch("delete_review", id);
+            this.$refs.deleteReview.hide();
+        },
         /*
         Method Name: deleteWorkout
         Creation Date: 01/22/20
@@ -474,14 +534,14 @@ const Workout = {
         },
         /*
         Method Name: editWorkout
-        Creation Date: 
+        Creation Date:
         Purpose: Validate workout data then call method from store with data
         Arguments: Workout data (Object, implicit)
         Required: Vuex store file (implicit by calling this.$store...)
         Return Value: None
         */
         editWorkout() {
-            this.$validator.validateAll().then(async result => {
+            this.$validator.validateAll("editWorkout").then(async result => {
                 if (result) {
                     var data = new FormData();
                     data.append("title", this.workoutTitle);
@@ -510,7 +570,7 @@ const Workout = {
         },
         /*
         Method Name: approveWorkout
-        Creation Date: 
+        Creation Date:
         Purpose: Updates workout to be approved
         Arguments: None
         Required: Existing Workout
