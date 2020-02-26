@@ -15,6 +15,8 @@ Code History:
 01/22/20 - Hans Santos - Implement and finalize method for delete workout
 02/04/20 - Jian Chan - Implement and finalize method for register user
 02/04/20 - Hans Santos - Implement and finalize method for login and logout
+02/17/20 - Jian Chan - Implement and finalize method for update workout
+02/18/20 - Gab Datiles - Implement and finalize method for create review
 
 File Creation Date: 01/20/20
 Development Group: GetUP
@@ -104,7 +106,7 @@ export default new Vuex.Store({
         // Review Actions
         /*
         Method Name: create_review
-        Creation Date: 02/20/22
+        Creation Date: 02/18/22
         Purpose: Submit new review to backend. Then, read workout again from backend and call set_workout mutation.
         Arguments: {state (Object), commit (Function)} (from store), reviewData (Object, data of new review)
         Required: axios
@@ -209,7 +211,7 @@ export default new Vuex.Store({
         },
         /*
         Method Name: update_workout
-        Creation Date: ** for future sprint
+        Creation Date: 02/17/20
         Purpose: Submit updated workout data to backend, and call set_workout mutation
         Arguments: {state (Object), commit (Function)} (from store), workoutData (Object, Updated workout data)
         Required: axios
@@ -305,7 +307,7 @@ export default new Vuex.Store({
         },
         /*
         Method Name: update_admin
-        Creation Date: 02/04/20
+        Creation Date: ** for future sprint
         Purpose: Call set_admin mutation with new admin value
         Arguments: {commit} (Function from store), admin (Boolean, if logged in user is an admin)
         Required: None

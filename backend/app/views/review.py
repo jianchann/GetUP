@@ -9,10 +9,8 @@ of the Philippines, Diliman for the AY 2019-
 2020.
 
 Code History:
-- Create File, Add all imports, Initialize all methods
-- Implement and finalize methods for get reviews
-- Implement and finalize methods for add reviews
-- Implement and finalize methods for delete review
+02/17/20 - Jian Chan - Create File, Add all imports, Initialize all methods
+02/18/20 - Gab Datiles - Implement and finalize methods for add reviews
 
 File Creation Date:
 Development Group: GetUP
@@ -30,7 +28,7 @@ from flask import Flask, jsonify, g, render_template, redirect, request
 
 """
 Method Name: create_review
-Creation Date: 02/20/22
+Creation Date: 02/18/22
 Purpose: Add review to the database
 Arguments: User adding workout (Object), request data for the review (Object, implicit)
 Required: Review class from database, token_required from auth_helpers (to protect route)

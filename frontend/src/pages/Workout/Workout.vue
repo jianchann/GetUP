@@ -387,6 +387,9 @@ Code History:
 01/20/20 - Jian Chan - Create File, Add all imports, Fix layout of home page
 01/22/20 - Jian Chan - Implement and finalize methods for view workout
 01/22/20 - Hans Santos - Implement and finalize methods for delete workout
+02/17/20 - Jian Chan - Implement and finalize methods for update workout
+02/18/20 - Gab Datiles - Implement and finalize methods for create review
+02/18/20 - Hans Santos - Implement and finalize methods for view reviews
 
 File Creation Date: 01/20/20
 Development Group: GetUP
@@ -487,7 +490,7 @@ const Workout = {
         },
         /*
         Method Name: addReview
-        Creation Date: 02/20/22
+        Creation Date: 02/18/22
         Purpose: Validate review data then call method from store with data
         Arguments: Review data (Object, implicit)
         Required: Vuex store file (implicit by calling this.$store...)
@@ -534,7 +537,7 @@ const Workout = {
         },
         /*
         Method Name: editWorkout
-        Creation Date:
+        Creation Date: 02/17/20
         Purpose: Validate workout data then call method from store with data
         Arguments: Workout data (Object, implicit)
         Required: Vuex store file (implicit by calling this.$store...)
@@ -568,15 +571,6 @@ const Workout = {
                 }
             });
         },
-        /*
-        Method Name: approveWorkout
-        Creation Date:
-        Purpose: Updates workout to be approved
-        Arguments: None
-        Required: Existing Workout
-        Return Value: None
-        */
-        approveWorkout() {}
     }
 };
 

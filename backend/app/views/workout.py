@@ -13,6 +13,9 @@ Code History:
 01/21/20 - Jian Chan - Implement and finalize methods for get workout (multiple and single) and add workout
 01/22/20 - Hans Santos - Implement and finalize methods for delete workout
 02/04/20 - Gab Datiles - Implement protecting of API routes from non-authenticated users
+02/17/20 - Jian Chan - Implement and finalize methods for edit workout
+02/18/20 - Hans Santos - Implement fetching of reviews together with workout data
+
 
 File Creation Date: 01/20/20
 Development Group: GetUP
@@ -64,7 +67,7 @@ def get_workouts(current_user):
 """
 Method Name: get_workout
 Creation Date: 01/21/20
-Purpose: Get specific workouts
+Purpose: Get specific workout
 Arguments: User requesting workout (Object), ID of workout (Int)
 Required: Workout class from database, token_required from auth_helpers (to protect route)
 Return Value: Workout data in json
@@ -176,11 +179,11 @@ def create_workout(current_user):
 
 """
 Method Name: update_workout
-Creation Date: ** for future sprint
+Creation Date: 02/17/20
 Purpose: Update specific workout from the database
 Arguments: User updating workout (Object), ID of workout (Int), request data for the workout (Object, implicit)
 Required: Workout class from database, token_required from auth_helpers (to protect route)
-Return Value: Success message in json
+Return Value: Updated workout data in json
 """
 @app.route('/workout/<int:id>', methods=['PUT'])
 @token_required
