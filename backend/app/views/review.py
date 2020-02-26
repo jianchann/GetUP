@@ -12,7 +12,7 @@ Code History:
 02/17/20 - Jian Chan - Create File, Add all imports, Initialize all methods
 02/18/20 - Gab Datiles - Implement and finalize methods for add reviews
 
-File Creation Date:
+File Creation Date: 02/17/20
 Development Group: GetUP
 Client Group: UP Diliman Students
 Purpose: Controller for all API calls related to the review model/class
@@ -55,24 +55,3 @@ def create_review(current_user):
     db.session.commit()
 
     return jsonify({'message': "New review created."})
-
-"""
-Method Name: delete_review
-Creation Date: 
-Purpose: Delete review from the database if user is permitted to
-Arguments: ID of review (Int), User deleting review (Object)
-Required: Review class from database, token_required from auth_helpers (to protect route)
-Return Value: Success message in json
-"""
-@app.route('/review/<int:id>', methods=['DELETE'])
-@token_required
-def delete_review(current_user,id):
-    review = Review.query.get(id)
-    
-    if review.user_id != current_user.id and not current_user.admin:
-        return 'User not authorized to delete this review.', 404
-
-    db.session.delete(review)
-    db.session.commit()
-
-    return jsonify({'message': "Review deleted"})

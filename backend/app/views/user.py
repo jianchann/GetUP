@@ -13,7 +13,7 @@ Code History:
 02/04/20 - Hans Santos - Implement and finalize methods for user login
 02/04/20 - Jian Chan - Implement and finalize methods for user register
 
-File Creation Date:
+File Creation Date: 02/04/20
 Development Group: GetUP
 Client Group: UP Diliman Students
 Purpose: Controller for all API calls related to the user model/class

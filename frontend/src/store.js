@@ -129,31 +129,6 @@ export default new Vuex.Store({
                 })
                 .catch(error => {});
         },
-        /*
-        Method Name: delete_workout
-        Creation Date: ***
-        Purpose: Submit ID of review to be deleted to the backend. Then, read workout again from backend and call set_workout mutation.
-        Arguments: {state (Object), commit (Function)} (from store), reviewId (Number, ID of review)
-        Required: axios
-        Return Value: axios Promise
-        */
-        delete_review: async ({ state, commit }, reviewId) => {
-            return await axios
-                .delete("/review/" + reviewId, {
-                    headers: { "X-Access-Token": state.token }
-                })
-                .then(async response => {
-                    return await axios
-                        .get("/workout/" + state.workout.id, {
-                            headers: { "X-Access-Token": state.token }
-                        })
-                        .then(response => {
-                            commit("set_workout", response.data);
-                        })
-                        .catch(error => {});
-                })
-                .catch(error => {});
-        },
         // Workout Actions
         /*
         Method Name: read_workout

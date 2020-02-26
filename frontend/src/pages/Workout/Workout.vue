@@ -85,19 +85,6 @@
                         class="d-flex justify-content-between"
                     >
                         {{ review.body }}
-                        <b-button
-                            v-if="
-                                $store.state.admin || userId == review.user_id
-                            "
-                            variant="secondary"
-                            size="sm"
-                            @click="
-                                currentReviewId = review.id;
-                                $refs.deleteReview.show();
-                            "
-                        >
-                            <i class="fas fa-trash"></i>
-                        </b-button>
                     </div>
                 </div>
             </div>
@@ -140,29 +127,7 @@
             </form>
         </b-modal>
 
-        <!-- Delete Review Modal -->
-        <b-modal
-            id="deleteReview"
-            ref="deleteReview"
-            hide-footer
-            title="Delete this Review?"
-        >
-            <div class="d-flex justify-content-around">
-                <b-button
-                    variant="primary"
-                    size="large"
-                    @click="$refs.deleteReview.hide()"
-                    >No</b-button
-                >
-                <b-button
-                    variant="secondary"
-                    size="large"
-                    type="submit"
-                    @click="deleteReview(currentReviewId)"
-                    >Yes</b-button
-                >
-            </div>
-        </b-modal>
+
 
         <!-- Edit Workout Modal -->
         <b-modal
@@ -511,18 +476,6 @@ const Workout = {
                 } else {
                 }
             });
-        },
-        /*
-        Method Name: deleteReview
-        Creation Date: ***
-        Purpose: Delete review
-        Arguments: id (Number, id of review to be deleted)
-        Required: Vuex store file (implicit by calling this.$store...)
-        Return Value: None
-        */
-        async deleteReview(id) {
-            await this.$store.dispatch("delete_review", id);
-            this.$refs.deleteReview.hide();
         },
         /*
         Method Name: deleteWorkout
