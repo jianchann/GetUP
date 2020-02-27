@@ -35,7 +35,7 @@ class User(db.Model):
 
     """
     Method Name: set_password
-    Creation Date: 02/04/20
+    Creation Date: 01/20/20
     Purpose: Set password of user
     Arguments: self (Object, class method is being called from), password (String, password of user)
     Required: None
@@ -46,7 +46,7 @@ class User(db.Model):
 
     """
     Method Name: check_password
-    Creation Date: 02/04/20
+    Creation Date: 01/20/20
     Purpose: Check password of user
     Arguments: self (Object, class method is being called from), password (String, password of user)
     Required: None
