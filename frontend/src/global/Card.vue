@@ -2,7 +2,7 @@
     <div
         v-if="this.big"
         class="card m-2 hover-pointer hover-shadow"
-        style="min-width:250px; max-width: 300px;"
+        style="width: 250px; height: 250px;"
     >
         <img
             :src="getImageUrl(this.img)"
@@ -17,9 +17,13 @@
     <div
         v-else
         class="card m-2 hover-pointer hover-shadow"
-        style="min-width: 150px; max-width: 200px;"
+        style="width: 175px; height: 175px;"
     >
-        <img :src="getImageUrl(this.img)" class="card-img-top" alt="..." />
+        <img
+            :src="getImageUrl(this.img)"
+            class="card-img-top card-image"
+            alt="..."
+        />
         <div class="card-body">
             <h5 class="card-title">{{ this.title }}</h5>
             <h6 class="card-title">At the {{ this.location }}</h6>
