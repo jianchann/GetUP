@@ -7,22 +7,31 @@
         <div class="workout-details-container">
             <div class="d-flex justify-content-between">
                 <h2>{{ this.workout.title }}</h2>
-                <!-- <div class="d-flex flex-column" v-if="this.$store.state.admin"> -->
-                <div class="d-flex flex-column">
+                <div class="d-flex flex-column" v-if="$store.state.admin">
                     <b-button
-                        variant="secondary"
+                        v-if="this.workout.status != 'Approved'"
+                        variant="primary"
                         size="md"
-                        v-b-modal.editWorkout
+                        @click="editWorkout(true)"
                     >
-                        <i class="fas fa-edit"></i>
+                        Approve
                     </b-button>
-                    <b-button
-                        variant="secondary"
-                        size="md"
-                        v-b-modal.deleteWorkout
-                    >
-                        <i class="fas fa-trash"></i>
-                    </b-button>
+                    <div>
+                        <b-button
+                            variant="secondary"
+                            size="md"
+                            v-b-modal.editWorkout
+                        >
+                            <i class="fas fa-edit"></i>
+                        </b-button>
+                        <b-button
+                            variant="secondary"
+                            size="md"
+                            v-b-modal.deleteWorkout
+                        >
+                            <i class="fas fa-trash"></i>
+                        </b-button>
+                    </div>
                 </div>
             </div>
             <div class="d-flex justify-content-between">
@@ -171,7 +180,10 @@
             hide-footer
             title="Update Workout"
         >
-            <form @submit.prevent="editWorkout()" data-vv-scope="editWorkout">
+            <form
+                @submit.prevent="editWorkout(false)"
+                data-vv-scope="editWorkout"
+            >
                 <b-form-group
                     label="Title"
                     :invalid-feedback="errors.first('title', 'editWorkout')"
@@ -543,34 +555,57 @@ const Workout = {
         Required: Vuex store file (implicit by calling this.$store...)
         Return Value: None
         */
-        editWorkout() {
-            this.$validator.validateAll("editWorkout").then(async result => {
-                if (result) {
-                    var data = new FormData();
-                    data.append("title", this.workoutTitle);
-                    data.append("location", this.workoutLocation);
-                    data.append("duration", this.workoutDuration);
-                    data.append("best_times", this.workoutTimes);
-                    data.append("materials", this.workoutMaterials);
-                    data.append("people_count", this.workoutPeople);
-                    data.append("difficulty", this.workoutDifficulty);
-                    data.append("instructions", this.workoutInstructions);
-                    data.append("status", this.workoutStatus);
-                    if (this.workoutImage) {
-                        data.append(
-                            "file",
-                            document.getElementById("image_upload").files[0]
-                        );
-                    }
-                    await this.$store.dispatch("update_workout", {
-                        id: this.id,
-                        data: data
+        editWorkout(approve) {
+            if (approve) {
+                var data = new FormData();
+                data.append("title", this.workout.title);
+                data.append("location", this.workout.location);
+                data.append("duration", this.workout.duration);
+                data.append("best_times", this.workout.best_times);
+                data.append("materials", this.workout.materials);
+                data.append("people_count", this.workout.people_count);
+                data.append("difficulty", this.workout.difficulty);
+                data.append("instructions", this.workout.instructions);
+                data.append("status", "Approved");
+                this.$store.dispatch("update_workout", {
+                    id: this.id,
+                    data: data
+                });
+            } else {
+                this.$validator
+                    .validateAll("editWorkout")
+                    .then(async result => {
+                        if (result) {
+                            var data = new FormData();
+                            data.append("title", this.workoutTitle);
+                            data.append("location", this.workoutLocation);
+                            data.append("duration", this.workoutDuration);
+                            data.append("best_times", this.workoutTimes);
+                            data.append("materials", this.workoutMaterials);
+                            data.append("people_count", this.workoutPeople);
+                            data.append("difficulty", this.workoutDifficulty);
+                            data.append(
+                                "instructions",
+                                this.workoutInstructions
+                            );
+                            data.append("status", this.workoutStatus);
+                            if (this.workoutImage) {
+                                data.append(
+                                    "file",
+                                    document.getElementById("image_upload")
+                                        .files[0]
+                                );
+                            }
+                            await this.$store.dispatch("update_workout", {
+                                id: this.id,
+                                data: data
+                            });
+                            this.$refs.editWorkout.hide();
+                        } else {
+                        }
                     });
-                    this.$refs.editWorkout.hide();
-                } else {
-                }
-            });
-        },
+            }
+        }
     }
 };
 

@@ -18,6 +18,7 @@
                         Add Workout
                     </b-button> -->
                     <b-button
+                        v-if="$store.state.admin"
                         variant="secondary"
                         size="md"
                         @click="openModal()"
@@ -43,43 +44,25 @@
                 </div>
             </div>
 
-            <!-- <div v-if="this.$store.state.admin" class="mt-5 ml-3 mr-3">
+            <div v-if="this.$store.state.admin" class="mt-5 ml-3 mr-3">
                 <div class="d-flex justify-content-between">
-                    <h1> Suggested Workouts </h1>
-                </div>    
+                    <h1>Suggested Workouts</h1>
+                </div>
                 <div class="container-fluid">
                     <div class="row flex-row flex-nowrap overflow-auto">
                         <div v-for="workout in this.workouts" :key="workout.id">
-                            <Card v-if="!workout.approved" :big="false" :img="workout.image" :title="workout.title" @click.native="gotoPage('workouts',workout.id)" >
+                            <Card
+                                v-if="workout.status == 'Pending'"
+                                :big="false"
+                                :img="workout.image"
+                                :title="workout.title"
+                                @click.native="gotoPage('workouts', workout.id)"
+                            >
                             </Card>
                         </div>
                     </div>
                 </div>
-            </div> -->
-            <!-- 
-            <div class="d-none d-md-block">
-                <h1 class="pl-5"> Test </h1>
-                <div class="pl-3 d-flex flex-column align-items-center">
-                    <div class="pr-4">
-                        website
-                    </div>
-                    <div class="mr-4">
-                        webiste
-                    </div>
-                </div>
             </div>
-
-            <div class="d-block d-md-none">
-                <h1 class="pl-5"> Test </h1>
-                <div class="pl-3 d-flex flex-column align-items-center">
-                    <div class="pr-4">
-                        mobile
-                    </div>
-                    <div class="mr-4">
-                        mobile
-                    </div>
-                </div>
-            </div> -->
 
             <b-modal ref="addWorkout" hide-footer title="New Workout">
                 <b-form-group
@@ -209,7 +192,7 @@
                     </div>
                 </b-form-group>
 
-                <div v-if="this.$store.state.admin" style="float: right">
+                <div v-if="$store.state.admin" style="float: right">
                     <!-- <b-button
                         variant="primary"
                         size="large"

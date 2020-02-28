@@ -201,7 +201,7 @@ def update_workout(current_user,id):
     workout.materials = post_data.get('materials')
     workout.difficulty = post_data.get('difficulty')
     workout.people_count = post_data.get('people_count')
-    instructions = post_data.get('instructions')
+    workout.instructions = post_data.get('instructions')
     workout.status = post_data.get('status')
 
     file = request.files.get('file')
