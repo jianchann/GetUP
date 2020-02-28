@@ -302,7 +302,9 @@ export default new Vuex.Store({
             commit("set_token", null);
             commit("set_firstName", "");
             commit("set_admin", false);
-            router.push("/");
+            if (router.currentRoute.path != "/") {
+                router.push("/");
+            }
             return;
         },
         /*

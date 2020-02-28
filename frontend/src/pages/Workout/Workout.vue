@@ -456,9 +456,15 @@ const Workout = {
     Return Value: None
     */
     async created() {
+        let loader = this.$loading.show();
         this.id = this.$route.params.id;
         await this.$store.dispatch("read_workout", this.$route.params.id);
-        if (this.workout != null) {
+        loader.hide();
+        if (
+            this.workout != null &&
+            (this.workout.status == "Approved" ||
+                (this.workout.status == "Pending" && this.$store.state.admin))
+        ) {
             this.workoutTitle = this.workout.title;
             this.workoutLocation = this.workout.location;
             this.workoutTimes = this.workout.best_times;
@@ -511,6 +517,7 @@ const Workout = {
         addReview() {
             this.$validator.validateAll("addReview").then(async result => {
                 if (result) {
+                    let loader = this.$loading.show();
                     var payload = {
                         body: this.reviewBody,
                         rating: this.reviewRating,
@@ -520,6 +527,7 @@ const Workout = {
                     this.$refs.addReview.hide();
                     this.reviewBody = null;
                     this.reviewRating = null;
+                    loader.hide();
                 } else {
                 }
             });
@@ -533,7 +541,9 @@ const Workout = {
         Return Value: None
         */
         async deleteReview(id) {
+            let loader = this.$loading.show();
             await this.$store.dispatch("delete_review", id);
+            loader.hide();
             this.$refs.deleteReview.hide();
         },
         /*
@@ -545,7 +555,9 @@ const Workout = {
         Return Value: None
         */
         deleteWorkout() {
+            let loader = this.$loading.show();
             this.$store.dispatch("delete_workout", this.id);
+            loader.hide();
         },
         /*
         Method Name: editWorkout
@@ -557,6 +569,7 @@ const Workout = {
         */
         editWorkout(approve) {
             if (approve) {
+                let loader = this.$loading.show();
                 var data = new FormData();
                 data.append("title", this.workout.title);
                 data.append("location", this.workout.location);
@@ -571,11 +584,13 @@ const Workout = {
                     id: this.id,
                     data: data
                 });
+                loader.hide();
             } else {
                 this.$validator
                     .validateAll("editWorkout")
                     .then(async result => {
                         if (result) {
+                            let loader = this.$loading.show();
                             var data = new FormData();
                             data.append("title", this.workoutTitle);
                             data.append("location", this.workoutLocation);
@@ -600,6 +615,7 @@ const Workout = {
                                 id: this.id,
                                 data: data
                             });
+                            loader.hide();
                             this.$refs.editWorkout.hide();
                         } else {
                         }

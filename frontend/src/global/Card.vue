@@ -4,11 +4,7 @@
         class="card m-2 hover-pointer hover-shadow"
         style="width: 250px; height: 250px;"
     >
-        <img
-            :src="getImageUrl(this.img)"
-            class="card-img-top card-image"
-            alt="..."
-        />
+        <img :src="getImageUrl(this.img)" class="card-img-top card-image" />
         <div class="card-body">
             <h5 class="card-title">{{ this.title }}</h5>
             <h6 class="card-title">At the {{ this.location }}</h6>
@@ -19,11 +15,7 @@
         class="card m-2 hover-pointer hover-shadow"
         style="width: 175px; height: 175px;"
     >
-        <img
-            :src="getImageUrl(this.img)"
-            class="card-img-top card-image"
-            alt="..."
-        />
+        <img :src="getImageUrl(this.img)" class="card-img-top card-image" />
         <div class="card-body">
             <h5 class="card-title">{{ this.title }}</h5>
             <h6 class="card-title">At the {{ this.location }}</h6>

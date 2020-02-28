@@ -36,11 +36,19 @@ import BootstrapVue from "bootstrap-vue";
 import JwtDecode from "jwt-decode";
 Vue.prototype.JwtDecode = JwtDecode;
 
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
+
 // import VueAgile from 'vue-agile';
 
 // Vue.use(VueAgile);
 
 Vue.use(BootstrapVue);
+Vue.use(Loading, {
+    color: "#7b1113",
+    backgroundColor: "#ffffff",
+    opacity: 0.5
+});
 Vue.use(VeeValidate, { fieldsBagName: "veeFields" });
 
 Vue.prototype.$http = axios;

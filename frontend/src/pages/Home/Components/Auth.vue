@@ -169,20 +169,22 @@ export default {
         Return Value: None
         */
         async signUp() {
-            await this.$validator.validateAll("signup").then(result => {
+            await this.$validator.validateAll("signup").then(async result => {
                 if (result) {
+                    let loader = this.$loading.show();
                     var payload = {
                         password: this.password,
                         email: this.email,
                         first_name: this.firstName,
                         last_name: this.lastName
                     };
-                    this.$store
+                    await this.$store
                         .dispatch("register_user", payload)
                         .then(() => {})
                         .catch(error => {
                             this.signUpError = error.data;
                         });
+                    loader.hide();
                 } else {
                 }
             });
@@ -196,18 +198,20 @@ export default {
         Return Value: None
         */
         logIn() {
-            this.$validator.validateAll("login").then(result => {
+            this.$validator.validateAll("login").then(async result => {
                 if (result) {
+                    let loader = this.$loading.show();
                     var payload = {
                         password: this.password,
                         email: this.email
                     };
-                    this.$store
+                    await this.$store
                         .dispatch("login_user", payload)
                         .then(() => {})
                         .catch(error => {
                             this.logInError = error.data;
                         });
+                    loader.hide();
                 } else {
                 }
             });

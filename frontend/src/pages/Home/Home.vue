@@ -314,6 +314,7 @@ export default {
         addWorkout() {
             this.$validator.validateAll().then(result => {
                 if (result) {
+                    let loader = this.$loading.show();
                     var data = new FormData();
                     data.append("title", this.workoutTitle);
                     data.append("location", this.workoutLocation);
@@ -329,6 +330,7 @@ export default {
                         document.getElementById("image_upload").files[0]
                     );
                     this.$store.dispatch("create_workout", data).then(() => {});
+                    loader.hide();
                     this.$refs.addWorkout.hide();
                 } else {
                 }
@@ -348,7 +350,9 @@ export default {
     */
     async created() {
         if (this.$store.state.loggedIn) {
+            let loader = this.$loading.show();
             await this.$store.dispatch("read_workouts");
+            loader.hide();
         }
     }
 };

@@ -28,6 +28,7 @@ Development Group: GetUP
 Client Group: UP Diliman Students
 Purpose: Parent/master component for all pages in website
 */
+
 import Navbar from "@/global/Navbar.vue";
 import { mapState } from "vuex";
 
@@ -51,6 +52,7 @@ export default {
     Return Value: None
     */
     created() {
+        let loader = this.$loading.show();
         var token = this.$store.state.token;
         var decodedToken = this.$store.state.token
             ? this.JwtDecode(this.$store.state.token)
@@ -60,6 +62,7 @@ export default {
         if (!this.loggedIn && this.$route.path != "/") {
             this.$router.push("/");
         }
+        loader.hide();
     },
     watch: {
         /*
