@@ -73,9 +73,11 @@ export default {
         Required: Vuex store file (implicit by calling this.$store...), JwtDecode (to decode JWT) 
         Return Value: None
         */
-        loggedIn(newValue, oldValue) {
+        async loggedIn(newValue, oldValue) {
             if (newValue) {
-                this.$store.dispatch("read_workouts");
+                let loader = this.$loading.show();
+                await this.$store.dispatch("read_workouts");
+                loader.hide();
             }
             var token = this.$store.state.token;
             var decodedToken = this.$store.state.token

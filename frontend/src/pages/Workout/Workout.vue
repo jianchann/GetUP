@@ -554,16 +554,16 @@ const Workout = {
         Required: Vuex store file (implicit by calling this.$store...)
         Return Value: None
         */
-        deleteWorkout() {
+        async deleteWorkout() {
             let loader = this.$loading.show();
-            this.$store.dispatch("delete_workout", this.id);
+            await this.$store.dispatch("delete_workout", this.id);
             loader.hide();
         },
         /*
         Method Name: editWorkout
         Creation Date: 02/17/20
         Purpose: Validate workout data then call method from store with data
-        Arguments: Workout data (Object, implicit)
+        Arguments: approve (Boolean whether edit is just for approving workout or not), Workout data (Object, implicit)
         Required: Vuex store file (implicit by calling this.$store...)
         Return Value: None
         */

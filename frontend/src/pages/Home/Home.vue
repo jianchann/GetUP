@@ -312,7 +312,7 @@ export default {
         Return Value: None
         */
         addWorkout() {
-            this.$validator.validateAll().then(result => {
+            this.$validator.validateAll().then(async result => {
                 if (result) {
                     let loader = this.$loading.show();
                     var data = new FormData();
@@ -329,7 +329,9 @@ export default {
                         "file",
                         document.getElementById("image_upload").files[0]
                     );
-                    this.$store.dispatch("create_workout", data).then(() => {});
+                    await this.$store
+                        .dispatch("create_workout", data)
+                        .then(() => {});
                     loader.hide();
                     this.$refs.addWorkout.hide();
                 } else {
