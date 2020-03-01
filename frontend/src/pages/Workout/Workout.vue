@@ -117,7 +117,7 @@
             <form @submit.prevent="addReview()" data-vv-scope="addReview">
                 <b-form-group label="Rating - 1 (lowest) to 5 (highest)">
                     <b-form-input
-                        v-validate="'required|between:1,5'"
+                        v-validate="'required|integer|between:1,5'"
                         v-model="reviewRating"
                         name="reviewRating"
                         type="number"
@@ -215,7 +215,7 @@
                     :invalid-feedback="errors.first('duration', 'editWorkout')"
                 >
                     <b-form-input
-                        v-validate="'required|between:1,120'"
+                        v-validate="'required|integer|between:1,180'"
                         v-model="workoutDuration"
                         type="number"
                         name="duration"
@@ -286,7 +286,7 @@
                 >
                     <b-form-input
                         v-model="workoutPeople"
-                        v-validate="'required|between:1,30'"
+                        v-validate="'required|integer|between:1,60'"
                         name="participant count"
                         type="number"
                         :state="

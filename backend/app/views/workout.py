@@ -188,8 +188,8 @@ Return Value: Updated workout data in json
 @app.route('/workout/<int:id>', methods=['PUT'])
 @token_required
 def update_workout(current_user,id):
-    # if not current_user.admin:
-    #     return 'User not allowed to update workout.', 403
+    if not current_user.admin:
+        return 'User not allowed to update workout.', 403
 
     workout = Workout.query.get(id)
     
@@ -270,8 +270,8 @@ Return Value: Success message in json
 @app.route('/workout/<int:id>', methods=['DELETE'])
 @token_required
 def delete_workout(current_user,id):
-    # if not current_user.admin:
-    #     return 'User not allowed to delete workout.', 403
+    if not current_user.admin:
+        return 'User not allowed to delete workout.', 403
 
     try:
         workout = Workout.query.get(id)

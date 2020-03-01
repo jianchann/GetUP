@@ -92,7 +92,7 @@
                     :invalid-feedback="errors.first('duration')"
                 >
                     <b-form-input
-                        v-validate="'required|between:1,120'"
+                        v-validate="'required|integer|between:1,180'"
                         v-model="workoutDuration"
                         type="number"
                         name="duration"
@@ -143,7 +143,7 @@
                 >
                     <b-form-input
                         v-model="workoutPeople"
-                        v-validate="'required|between:1,30'"
+                        v-validate="'required|integer|between:1,60'"
                         name="participant count"
                         type="number"
                         :state="errors.has('participant count') ? false : null"
