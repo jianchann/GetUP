@@ -41,7 +41,7 @@ Return Value: JSON Object contianing JWT (String, token for authentication) and 
 @app.route('/user/login', methods=['POST'])
 def login():
     post_data = request.get_json()
-    email = post_data.get('email')
+    email = post_data.get('email').lower()
     password = post_data.get('password')
     user = User.query.filter(User.email == email).first()
     if user is None:
@@ -71,7 +71,7 @@ def register():
     first_name = post_data.get('first_name')
     last_name = post_data.get('last_name')
     password = post_data.get('password')
-    email = post_data.get('email')
+    email = post_data.get('email').lower()
     admin = False
 
     users = User.query.filter((User.email == email)).all()

@@ -15,6 +15,7 @@ Code History:
 02/04/20 - Gab Datiles - Implement protecting of API routes from non-authenticated users
 02/17/20 - Jian Chan - Implement and finalize methods for edit workout
 02/18/20 - Hans Santos - Implement fetching of reviews together with workout data
+03/02/20 - Jian Chan - Implement user roles customization (for admin)
 
 
 File Creation Date: 01/20/20

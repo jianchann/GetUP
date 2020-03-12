@@ -47,6 +47,9 @@ def token_required(f):
             data = jwt.decode(token, app.config['SECRET_KEY'])
             print(data)
             current_user = models.User.query.filter_by(id=data['id']).first()
+            print(current_user)
+            if not current_user:
+                raise
         except:
             return jsonify({'message' : 'Access Token is invalid.'}), 401
 

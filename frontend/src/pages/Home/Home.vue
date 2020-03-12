@@ -28,7 +28,9 @@
                 </div>
 
                 <div class="container-fluid">
-                    <div class="row flex-row flex-nowrap overflow-auto">
+                    <div
+                        class="row flex-row flex-nowrap align-self-stretch overflow-auto"
+                    >
                         <div v-for="workout in this.workouts" :key="workout.id">
                             <Card
                                 v-if="workout.status == 'Approved'"
@@ -49,7 +51,9 @@
                     <h1>Suggested Workouts</h1>
                 </div>
                 <div class="container-fluid">
-                    <div class="row flex-row flex-nowrap overflow-auto">
+                    <div
+                        class="row flex-row flex-nowrap align-self-stretch overflow-auto"
+                    >
                         <div v-for="workout in this.workouts" :key="workout.id">
                             <Card
                                 v-if="workout.status == 'Pending'"
@@ -335,6 +339,16 @@ export default {
                         .then(() => {});
                     loader.hide();
                     this.$refs.addWorkout.hide();
+                    this.workoutTitle = null;
+                    this.workoutLocation = null;
+                    this.workoutTimes = null;
+                    this.workoutMaterials = null;
+                    this.workoutDuration = null;
+                    this.workoutPeople = null;
+                    this.workoutDifficulty = null;
+                    this.workoutInstructions = null;
+                    this.workoutImage = null;
+                    this.workoutStatus = "Pending";
                 } else {
                 }
             });

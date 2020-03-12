@@ -11,6 +11,8 @@ of the Philippines, Diliman for the AY 2019-
 Code History:
 02/17/20 - Jian Chan - Create File, Add all imports, Initialize all methods
 02/18/20 - Gab Datiles - Implement and finalize methods for add reviews
+03/02/20 - Gab Datiles - Implement and finalize methods for delete reviews
+03/02/20 - Jian Chan - Implement user roles customization (for admin)
 
 File Creation Date: 02/17/20
 Development Group: GetUP
@@ -58,7 +60,7 @@ def create_review(current_user):
 
 """
 Method Name: delete_review
-Creation Date: 
+Creation Date: 03/02/20
 Purpose: Delete review from the database if user is permitted to
 Arguments: ID of review (Int), User deleting review (Object)
 Required: Review class from database, token_required from auth_helpers (to protect route)

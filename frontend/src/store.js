@@ -179,18 +179,23 @@ export default new Vuex.Store({
         /*
         Method Name: read_workouts
         Creation Date: 01/22/22
-        Purpose: Read workouts from backend, and call set_workouts mutation
-        Arguments: {state (Object), commit (Function)} (from store)
+        Purpose: Read workouts from backend, and call set_workouts mutation. If error, reset token.
+        Arguments: {state (Object), commit (Function), dispatch (Function)} (from store)
         Required: axios
         Return Value: axios Promise
         */
-        read_workouts: async ({ state, commit }) => {
+        read_workouts: async ({ state, commit, dispatch }) => {
             return await axios
                 .get("/workout", {
                     headers: { "X-Access-Token": state.token }
                 })
                 .then(response => {
                     commit("set_workouts", response.data);
+                })
+                .catch(error => {
+                    if (error.response.status == 401) {
+                        dispatch("logout_user");
+                    }
                 });
         },
         /*
