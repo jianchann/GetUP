@@ -174,7 +174,11 @@ export default new Vuex.Store({
                 .then(response => {
                     commit("set_workout", response.data);
                 })
-                .catch(error => {});
+                .catch(error => {
+                    if (error.response.status == 401) {
+                        dispatch("logout_user");
+                    }
+                });
         },
         /*
         Method Name: read_workouts
