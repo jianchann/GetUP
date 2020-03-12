@@ -242,6 +242,7 @@ Code History:
 01/22/20 - Jian Chan - Implement and finalize methods for view workouts, add workout, and HTML display
 01/22/20 - Gab Datiles - Implement only add workout available if no workout exists
 02/04/20 - Gab Datiles - Implement reactive behavior of component when user logs in or logs out
+03/02/20 - Jian Chan - Implement and finalize handling of user roles (only admins can add workouts and view pending workouts)
 
 File Creation Date: 01/20/20
 Development Group: GetUP

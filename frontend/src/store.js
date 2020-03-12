@@ -17,6 +17,8 @@ Code History:
 02/04/20 - Hans Santos - Implement and finalize method for login and logout
 02/17/20 - Jian Chan - Implement and finalize method for update workout
 02/18/20 - Gab Datiles - Implement and finalize method for create review
+03/02/20 - Jian Chan - Implement and finalize method for user roles (admin)
+03/02/20 - Gab Datiles - Implement and finalize method for delete review
 
 File Creation Date: 01/20/20
 Development Group: GetUP
@@ -46,7 +48,7 @@ export default new Vuex.Store({
         // Auth mutations
         /*
         Method Name: set_admin
-        Creation Date: ** for future sprint
+        Creation Date: 03/02/20
         Purpose: Set admin variable in state to new value
         Arguments: state (Object), admin (Boolean)
         Required: None
@@ -130,8 +132,8 @@ export default new Vuex.Store({
                 .catch(error => {});
         },
         /*
-        Method Name: delete_workout
-        Creation Date: ***
+        Method Name: delete_review
+        Creation Date: 03/02/20
         Purpose: Submit ID of review to be deleted to the backend. Then, read workout again from backend and call set_workout mutation.
         Arguments: {state (Object), commit (Function)} (from store), reviewId (Number, ID of review)
         Required: axios
@@ -309,7 +311,7 @@ export default new Vuex.Store({
         },
         /*
         Method Name: update_admin
-        Creation Date: ** for future sprint
+        Creation Date: 03/02/20
         Purpose: Call set_admin mutation with new admin value
         Arguments: {commit} (Function from store), admin (Boolean, if logged in user is an admin)
         Required: None

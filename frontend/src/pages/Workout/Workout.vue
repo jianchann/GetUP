@@ -402,6 +402,9 @@ Code History:
 02/17/20 - Jian Chan - Implement and finalize methods for update workout
 02/18/20 - Gab Datiles - Implement and finalize methods for create review
 02/18/20 - Hans Santos - Implement and finalize methods for view reviews
+03/02/20 - Hans Santos - Implement and finalize methods for approve workout
+03/02/20 - Hans Santos - Implement and finalize methods for delete review
+03/02/20 - Jian Chan - Implement and finalize handling of user roles (only admins can update, delete, approve workouts and delete anybody's review)
 
 File Creation Date: 01/20/20
 Development Group: GetUP
@@ -534,8 +537,8 @@ const Workout = {
         },
         /*
         Method Name: deleteReview
-        Creation Date: ***
-        Purpose: Delete review
+        Creation Date: 03/02/20
+        Purpose: Delete review with matching id by calling method from store
         Arguments: id (Number, id of review to be deleted)
         Required: Vuex store file (implicit by calling this.$store...)
         Return Value: None
@@ -549,7 +552,7 @@ const Workout = {
         /*
         Method Name: deleteWorkout
         Creation Date: 01/22/20
-        Purpose: Delete Workout
+        Purpose: Delete Workout by calling method from store
         Arguments: id (Number, implicit from data, id of workout to be deleted)
         Required: Vuex store file (implicit by calling this.$store...)
         Return Value: None
@@ -562,7 +565,7 @@ const Workout = {
         /*
         Method Name: editWorkout
         Creation Date: 02/17/20
-        Purpose: Validate workout data then call method from store with data
+        Purpose: If approving, call method from store with updated workout data with approved status. If updating, validate workout data then call method from store with data
         Arguments: approve (Boolean whether edit is just for approving workout or not), Workout data (Object, implicit)
         Required: Vuex store file (implicit by calling this.$store...)
         Return Value: None
